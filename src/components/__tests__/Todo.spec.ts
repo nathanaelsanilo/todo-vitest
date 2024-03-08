@@ -28,8 +28,23 @@ describe('Todo Component', () => {
 
     await wrapper.get(txtInput).setValue('lunch')
     await wrapper.get(btnAdd).trigger('submit')
-    const items = wrapper.findAll(todoItem)
+    const item = wrapper.find(todoItem)
 
-    expect(items.length).toBeGreaterThan(0)
+    expect(item.text()).toBe('lunch')
+  })
+
+  it('it should delete todo', async () => {
+    const wrapper = mount(Todo)
+    const btnAdd = '[data-testid="btn-add"]'
+    const txtInput = '[data-testid="input-todo"]'
+    const todoItem = '[data-testid="item-todo"]'
+    const btnDelete = '[data-testid="btn-delete"]'
+    const todo = 'lunch'
+
+    await wrapper.get(txtInput).setValue(todo)
+    await wrapper.get(btnAdd).trigger('submit')
+    await wrapper.get(btnDelete).trigger('click')
+
+    expect(wrapper.findAll(todoItem)).toHaveLength(0)
   })
 })

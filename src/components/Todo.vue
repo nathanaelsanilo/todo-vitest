@@ -12,11 +12,17 @@ const todoList = reactive<string[]>([])
 const addTodo = () => {
   todoList.push(inputTodo.value)
 }
+
+const deleteTodo = (todo: string) => {
+  const filtered = [...todoList].filter((e) => e !== todo)
+  todoList.length = 0
+  todoList.push(...filtered)
+}
 </script>
 
 <template>
   <section class="section">
-    <div class="container">
+    <div class="container is-max-desktop">
       <h1 class="title">Todo App</h1>
       <div class="card">
         <div class="card-header">
@@ -47,10 +53,23 @@ const addTodo = () => {
               </div>
             </form>
           </div>
-          <div class="content">
+          <div class="">
             <ul>
-              <li v-for="todo in todoList" :key="todo" data-testid="item-todo">
-                {{ todo }}
+              <li v-for="todo in todoList" :key="todo">
+                <div class="columns">
+                  <span data-testid="item-todo" class="column is-size-3">{{ todo }}</span>
+                  <div class="column">
+                    <button
+                      class="button is-danger is-small level-item"
+                      data-testid="btn-delete"
+                      @click="deleteTodo(todo)"
+                    >
+                      <span class="icon">
+                        <i class="bi bi-trash"></i>
+                      </span>
+                    </button>
+                  </div>
+                </div>
               </li>
             </ul>
           </div>
