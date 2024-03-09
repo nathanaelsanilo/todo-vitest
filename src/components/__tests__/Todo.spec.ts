@@ -1,27 +1,30 @@
-import { mount } from '@vue/test-utils'
-import { describe, it, expect } from 'vitest'
+import { VueWrapper, mount } from '@vue/test-utils'
+import { describe, it, expect, beforeEach } from 'vitest'
 import Todo from '@/components/Todo.vue'
+
+let wrapper!: VueWrapper
+beforeEach(() => {
+  wrapper = mount(Todo)
+
+  return () => wrapper.unmount()
+})
 
 describe('Todo Component', () => {
   it('it should render component', () => {
-    const wrapper = mount(Todo)
     expect(wrapper).toBeDefined()
   })
 
   it('it should have input', () => {
-    const wrapper = mount(Todo)
     const txtInput = '[data-testid="input-todo"]'
     expect(wrapper.get(txtInput)).toBeTruthy()
   })
 
   it('it shouuld have add button', () => {
-    const wrapper = mount(Todo)
     const btnAdd = '[data-testid="btn-add"]'
     expect(wrapper.get(btnAdd)).toBeTruthy()
   })
 
   it('it should add new todo', async () => {
-    const wrapper = mount(Todo)
     const btnAdd = '[data-testid="btn-add"]'
     const txtInput = '[data-testid="input-todo"]'
     const todoItem = '[data-testid="item-todo"]'
@@ -34,7 +37,6 @@ describe('Todo Component', () => {
   })
 
   it('it should delete todo', async () => {
-    const wrapper = mount(Todo)
     const btnAdd = '[data-testid="btn-add"]'
     const txtInput = '[data-testid="input-todo"]'
     const todoItem = '[data-testid="item-todo"]'
