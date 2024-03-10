@@ -4,6 +4,7 @@ export default {
 }
 </script>
 <script lang="ts" setup>
+import { VButton } from '@/components/VButton'
 import { reactive, ref } from 'vue'
 
 const inputTodo = ref<string>('')
@@ -46,9 +47,7 @@ const deleteTodo = (todo: string) => {
               </div>
               <div class="field">
                 <div class="control">
-                  <button class="button is-primary" type="submit" data-testid="btn-add">
-                    Add Todo
-                  </button>
+                  <VButton type="submit" colors="primary" data-testid="btn-add"> Add Todo </VButton>
                 </div>
               </div>
             </form>
