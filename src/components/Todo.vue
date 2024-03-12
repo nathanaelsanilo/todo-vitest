@@ -5,6 +5,7 @@ export default {
 </script>
 <script lang="ts" setup>
 import { VButton } from '@/components/VButton'
+import { VTextField } from '@/components/VTextField'
 import { reactive, ref } from 'vue'
 
 const inputTodo = ref<string>('')
@@ -12,6 +13,7 @@ const todoList = reactive<string[]>([])
 
 const addTodo = () => {
   todoList.push(inputTodo.value)
+  inputTodo.value = ''
 }
 
 const deleteTodo = (todo: string) => {
@@ -32,19 +34,13 @@ const deleteTodo = (todo: string) => {
         <div class="card-content">
           <div>
             <form novalidate @submit.prevent="addTodo">
-              <div class="field">
-                <label for="inputTodo" class="label">New Todo</label>
-                <div class="control">
-                  <input
-                    v-model="inputTodo"
-                    type="text"
-                    data-testid="input-todo"
-                    name="inputTodo"
-                    id="inputTodo"
-                    class="input"
-                  />
-                </div>
-              </div>
+              <VTextField
+                id="inputTodo"
+                v-model="inputTodo"
+                name="inputTodo"
+                label="New Todo"
+                data-testid="input-todo"
+              />
               <div class="field">
                 <div class="control">
                   <VButton type="submit" colors="primary" data-testid="btn-add"> Add Todo </VButton>
