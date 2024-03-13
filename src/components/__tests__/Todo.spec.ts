@@ -30,18 +30,28 @@ describe('Todo Component', () => {
 
   it('it should add new todo', async () => {
     await wrapper.get(txtInput).setValue(todo)
-    await wrapper.get(btnAdd).trigger('submit')
+    await wrapper.get(btnAdd).trigger('submit.prevent')
     const item = wrapper.find(todoItem)
 
     expect(item.text()).toBe(todo)
-    expect((<HTMLInputElement>wrapper.find(txtInput).element).value).toBe('')
+    expect(wrapper.find<HTMLInputElement>(txtInput).element.value).toBe('')
   })
 
   it('it should delete todo', async () => {
     await wrapper.get(txtInput).setValue(todo)
-    await wrapper.get(btnAdd).trigger('submit')
+    await wrapper.get(btnAdd).trigger('submit.prevent')
     await wrapper.get(btnDelete).trigger('click')
 
     expect(wrapper.findAll(todoItem)).toHaveLength(0)
+  })
+
+  it('it should complete todo', async () => {
+    const checkbox = '[data-testid="cb-complete"]'
+
+    await wrapper.get(txtInput).setValue(todo)
+    await wrapper.get(btnAdd).trigger('submit.prevent')
+    await wrapper.get(checkbox).setValue()
+
+    expect(wrapper.get(todoItem).classes('is-complete')).toBe(true)
   })
 })

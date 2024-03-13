@@ -6,7 +6,8 @@ const props = defineProps<Props>()
 const classes = computed(() => ({
   button: true,
   'is-primary': props.colors === 'primary',
-  'is-danger': props.colors === 'danger'
+  'is-danger': props.colors === 'danger',
+  'is-small': props.size === 'sm'
 }))
 </script>
 
