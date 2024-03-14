@@ -6,7 +6,7 @@ export default {
 <script lang="ts" setup>
 import { VButton } from '@/components/VButton'
 import { VTextField } from '@/components/VTextField'
-import { reactive, ref } from 'vue'
+import { computed, reactive, ref, toValue } from 'vue'
 
 interface Todo {
   label: string
@@ -14,7 +14,18 @@ interface Todo {
 }
 
 const inputTodo = ref<string>('')
+const inputSearch = ref<string>('')
 const todoList = reactive<Todo[]>([])
+
+const filteredTodos = computed<Todo[]>(() => {
+  return todoList.filter((todo) => {
+    if (toValue(inputSearch)) {
+      return todo.label.toUpperCase().includes(toValue(inputSearch).toUpperCase())
+    }
+
+    return todo
+  })
+})
 
 const addTodo = () => {
   todoList.push({
@@ -61,8 +72,21 @@ const deleteTodo = (todo: string) => {
           <p class="card-header-title">Todos</p>
         </div>
         <div class="card-content">
-          <ul>
-            <li v-for="todo in todoList" :key="todo.label">
+          <div>
+            <VTextField
+              id="input-search"
+              v-model="inputSearch"
+              name="input-search"
+              label="Search"
+              type="search"
+              data-testid="input-search"
+            />
+          </div>
+          <p class="subtitle is-6 has-text-centered mt-2">
+            {{ `looking for "${inputSearch}"` }}
+          </p>
+          <ul class="mt-5">
+            <li v-for="todo in filteredTodos" :key="todo.label">
               <div class="columns">
                 <div class="column is-9">
                   <h3

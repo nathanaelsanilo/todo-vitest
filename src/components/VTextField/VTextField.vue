@@ -1,10 +1,12 @@
 <script lang="ts" setup>
+import { useAttrs } from 'vue'
 import type { Props } from './types'
 defineOptions({
   inheritAttrs: false
 })
 const props = defineProps<Props>()
 const model = defineModel<string>('modelValue')
+const attrs = useAttrs()
 </script>
 
 <template>
@@ -15,12 +17,12 @@ const model = defineModel<string>('modelValue')
     <div class="control">
       <input
         v-bind="$attrs"
-        :id="id"
+        :id="props.id"
         v-model="model"
-        :data-testid="$attrs['data-testid'] ?? 'vtextfield-input'"
-        type="text"
+        :data-testid="attrs['data-testid'] ?? 'vtextfield-input'"
+        :type="props.type ?? 'text'"
         class="input"
-        :name="name"
+        :name="props.name"
       />
     </div>
   </div>
