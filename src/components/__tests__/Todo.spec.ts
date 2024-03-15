@@ -1,4 +1,5 @@
 import Todo from '@/components/Todo.vue'
+import { i18n } from '@/modules/i18n'
 import { VueWrapper, mount } from '@vue/test-utils'
 import { beforeEach, describe, expect, it } from 'vitest'
 
@@ -17,7 +18,14 @@ describe('Todo Component', () => {
   }
 
   beforeEach(() => {
-    wrapper = mount(Todo)
+    wrapper = mount(Todo, {
+      global: {
+        plugins: [i18n],
+        mocks: {
+          t: (key: string) => key
+        }
+      }
+    })
 
     return () => wrapper.unmount()
   })
@@ -31,7 +39,7 @@ describe('Todo Component', () => {
   })
 
   it('it shouuld have add button', () => {
-    expect(wrapper.get(btnAdd).text()).toBe('Add Todo')
+    expect(wrapper.get(btnAdd).text()).toBe('common.save')
   })
 
   it('it should add new todo', async () => {

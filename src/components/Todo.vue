@@ -7,12 +7,13 @@ export default {
 import { VButton } from '@/components/VButton'
 import { VTextField } from '@/components/VTextField'
 import { computed, reactive, ref, toValue } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 interface Todo {
   label: string
   isComplete: boolean
 }
-
+const { t } = useI18n()
 const inputTodo = ref<string>('')
 const inputSearch = ref<string>('')
 const todoList = reactive<Todo[]>([])
@@ -45,10 +46,10 @@ const deleteTodo = (todo: string) => {
 <template>
   <section class="section">
     <div class="container is-max-desktop">
-      <h1 class="title">Todo App</h1>
+      <h1 class="title">{{ t('title.todo-app') }}</h1>
       <div class="card">
         <div class="card-header">
-          <p class="card-header-title">Input Todo</p>
+          <p class="card-header-title">{{ t('common.input-text', { text: t('common.todo') }) }}</p>
         </div>
         <div class="card-content">
           <form novalidate @submit.prevent="addTodo">
@@ -56,12 +57,14 @@ const deleteTodo = (todo: string) => {
               id="inputTodo"
               v-model="inputTodo"
               name="inputTodo"
-              label="New Todo"
+              :label="t('common.new-text', { text: t('common.todo') })"
               data-testid="input-todo"
             />
             <div class="field">
               <div class="control">
-                <VButton type="submit" colors="primary" data-testid="btn-add"> Add Todo </VButton>
+                <VButton type="submit" colors="primary" data-testid="btn-add">
+                  {{ t('common.save') }}
+                </VButton>
               </div>
             </div>
           </form>
@@ -69,7 +72,9 @@ const deleteTodo = (todo: string) => {
       </div>
       <div class="card mt-5">
         <div class="card-header">
-          <p class="card-header-title">Todos</p>
+          <p class="card-header-title">
+            {{ t('common.todo') }}
+          </p>
         </div>
         <div class="card-content">
           <div>
@@ -77,13 +82,13 @@ const deleteTodo = (todo: string) => {
               id="input-search"
               v-model="inputSearch"
               name="input-search"
-              label="Search"
+              :label="t('common.search')"
               type="search"
               data-testid="input-search"
             />
           </div>
           <p class="subtitle is-6 has-text-centered mt-2">
-            {{ `looking for "${inputSearch}"` }}
+            {{ `${t('common.looking-for')} "${inputSearch}"` }}
           </p>
           <ul class="mt-5">
             <li v-for="todo in filteredTodos" :key="todo.label">
@@ -107,7 +112,7 @@ const deleteTodo = (todo: string) => {
                         name="cb-complete"
                         data-testid="cb-complete"
                       />
-                      Complete
+                      {{ t('common.complete') }}
                     </label>
                     <VButton
                       class="level-item ml-5"

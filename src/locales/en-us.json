@@ -1,0 +1,14 @@
+{
+  "title": {
+    "todo-app": "Todo App"
+  },
+  "common": {
+    "todo": "Todo",
+    "save": "Save",
+    "input-text": "Input {text}",
+    "new-text": "New {text}",
+    "search": "Search",
+    "looking-for": "Looking for ",
+    "complete": "Complete"
+  }
+}

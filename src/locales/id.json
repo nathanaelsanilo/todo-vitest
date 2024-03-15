@@ -1,0 +1,14 @@
+{
+  "title": {
+    "todo-app": "Todo App"
+  },
+  "common": {
+    "todo": "Todo",
+    "save": "Simpan",
+    "input-text": "Masukan {text}",
+    "new-text": "{text} Baru",
+    "search": "Cari",
+    "looking-for": "Melakukan pencarian ",
+    "complete": "Selesai"
+  }
+}
