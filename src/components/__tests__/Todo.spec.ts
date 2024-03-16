@@ -60,10 +60,10 @@ describe('Todo Component', () => {
   })
 
   it('it should complete todo', async () => {
-    const checkbox = '[data-testid="cb-complete"]'
+    const btn = '[data-testid="btn-complete"]'
 
     await addItem()
-    await wrapper.get(checkbox).setValue()
+    await wrapper.get(btn).trigger('click')
 
     expect(wrapper.get(todoItem).classes('is-complete')).toBe(true)
   })
@@ -90,5 +90,13 @@ describe('Todo Component', () => {
     const filtered = wrapper.findAll(todoItem).map((wr) => wr.text())
     const includeSearch = filtered.some((e) => e.includes(searchValue))
     expect(includeSearch, 'expect contain character in data').toBe(true)
+  })
+
+  it('it should display timestamp', async () => {
+    const timestamp = '[data-testid="timestamp-todo"]'
+
+    await addItem('dinner')
+
+    expect(wrapper.get(timestamp).text()).toBe('common.published-date-text')
   })
 })

@@ -9,6 +9,7 @@
     "new-text": "New {text}",
     "search": "Search",
     "looking-for": "Looking for ",
-    "complete": "Complete"
+    "complete": "Complete",
+    "published-date-text": "Published date {text}"
   }
 }
