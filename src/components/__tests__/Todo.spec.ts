@@ -99,4 +99,31 @@ describe('Todo Component', () => {
 
     expect(wrapper.get(timestamp).text()).toBe('common.published-date-text')
   })
+
+  it('it allow user to reorder item', async () => {
+    const arrowUp = '[data-testid="arrow-up"]'
+    const arrowDown = '[data-testid="arrow-down"]'
+    const DINNER_IDX = 1
+
+    await addItem('lunch')
+    await addItem('dinner')
+
+    const dinner = wrapper.findAll(todoItem)[DINNER_IDX]
+
+    expect(dinner.text()).toBe('dinner')
+
+    // start up item
+    await wrapper.findAll(arrowUp)[DINNER_IDX].trigger('click')
+
+    expect(wrapper.findAll(todoItem)[0].text()).toBe('dinner')
+    expect(wrapper.findAll(todoItem)[1].text()).toBe('lunch')
+    // end
+
+    // start down item
+    await wrapper.findAll(arrowDown)[0].trigger('click')
+
+    expect(wrapper.findAll(todoItem)[0].text()).toBe('lunch')
+    expect(wrapper.findAll(todoItem)[1].text()).toBe('dinner')
+    // end
+  })
 })

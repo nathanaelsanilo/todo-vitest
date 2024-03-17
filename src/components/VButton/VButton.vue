@@ -7,7 +7,9 @@ const classes = computed(() => ({
   button: true,
   'is-primary': props.colors === 'primary',
   'is-danger': props.colors === 'danger',
-  'is-small': props.size === 'sm'
+  'is-small': props.size === 'sm',
+  'is-white': props.colors === 'white',
+  'is-success': props.colors === 'success'
 }))
 </script>
 

@@ -6,6 +6,7 @@ export default {
 <script lang="ts" setup>
 import { VButton } from '@/components/VButton'
 import { VTextField } from '@/components/VTextField'
+import { VIcon } from '@/components/VIcon'
 import { computed, reactive, ref, toValue } from 'vue'
 import { useI18n } from 'vue-i18n'
 import dayjs from 'dayjs'
@@ -43,6 +44,23 @@ const deleteTodo = (todo: string) => {
   const filtered = [...todoList].filter((e) => e.label !== todo)
   todoList.length = 0
   todoList.push(...filtered)
+}
+
+const upItem = (current: number) => {
+  if (current === 0) return
+  const before = todoList[current - 1]
+  const after = todoList[current]
+  todoList[current] = before
+  todoList[current - 1] = after
+}
+
+const downItem = (current: number) => {
+  if (current === todoList.length) return
+
+  const before = todoList[current + 1]
+  const after = todoList[current]
+  todoList[current] = before
+  todoList[current + 1] = after
 }
 </script>
 
@@ -100,17 +118,41 @@ const deleteTodo = (todo: string) => {
                 {{ `${t('common.looking-for')} "${inputSearch}"` }}
               </p>
               <ul class="mt-5">
-                <li v-for="todo in filteredTodos" :key="todo.label" class="block">
-                  <div class="columns">
-                    <div class="column is-8">
+                <li v-for="(todo, idx) in filteredTodos" :key="todo.label" class="block">
+                  <div class="columns is-align-items-center">
+                    <div class="column">
+                      <VButton
+                        class=""
+                        colors="white"
+                        size="sm"
+                        data-testid="arrow-up"
+                        @click="upItem(idx)"
+                      >
+                        <VIcon>
+                          <i class="bi bi-arrow-up"></i>
+                        </VIcon>
+                      </VButton>
+                      <VButton
+                        class=""
+                        colors="white"
+                        size="sm"
+                        data-testid="arrow-down"
+                        @click="downItem(idx)"
+                      >
+                        <VIcon>
+                          <i class="bi bi-arrow-down"></i>
+                        </VIcon>
+                      </VButton>
+                    </div>
+                    <div class="column is-9">
                       <h3
                         data-testid="item-todo"
-                        class="title is-3"
+                        class="title is-5"
                         :class="{ 'is-complete': todo.isComplete }"
                       >
                         {{ todo.label }}
                       </h3>
-                      <h5 class="subtitle is-5" data-testid="timestamp-todo">
+                      <h5 class="subtitle is-7" data-testid="timestamp-todo">
                         {{ t('common.published-date-text', { text: todo.timestamp }) }}
                       </h5>
                     </div>
@@ -118,14 +160,14 @@ const deleteTodo = (todo: string) => {
                       <div class="is-flex is-justify-content-right is-align-items-center">
                         <VButton
                           class="mr-2"
-                          colors="primary"
+                          colors="success"
                           size="sm"
                           data-testid="btn-complete"
                           @click="todo.isComplete = !todo.isComplete"
                         >
-                          <span class="icon">
+                          <VIcon>
                             <i class="bi bi-clipboard-check"></i>
-                          </span>
+                          </VIcon>
                         </VButton>
                         <VButton
                           class="level-item"
@@ -134,9 +176,9 @@ const deleteTodo = (todo: string) => {
                           data-testid="btn-delete"
                           @click="deleteTodo(todo.label)"
                         >
-                          <span class="icon">
+                          <VIcon>
                             <i class="bi bi-trash"></i>
-                          </span>
+                          </VIcon>
                         </VButton>
                       </div>
                     </div>
