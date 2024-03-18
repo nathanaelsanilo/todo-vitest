@@ -5,11 +5,12 @@ export default {
 </script>
 <script lang="ts" setup>
 import { VButton } from '@/components/VButton'
-import { VTextField } from '@/components/VTextField'
 import { VIcon } from '@/components/VIcon'
+import { VProgress } from '@/components/VProgress'
+import { VTextField } from '@/components/VTextField'
+import dayjs from 'dayjs'
 import { computed, reactive, ref, toValue } from 'vue'
 import { useI18n } from 'vue-i18n'
-import dayjs from 'dayjs'
 
 interface Todo {
   label: string
@@ -29,6 +30,15 @@ const filteredTodos = computed<Todo[]>(() => {
 
     return todo
   })
+})
+
+const countCompleted = computed(() => todoList.filter((record) => record.isComplete))
+
+const progress = computed<number>(() => {
+  const total = todoList.length
+  if (total === 0) return 0
+  const completeTask = todoList.filter((record) => record.isComplete).length
+  return Math.ceil((completeTask / total) * 100)
 })
 
 const addTodo = () => {
@@ -61,6 +71,10 @@ const downItem = (current: number) => {
   const after = todoList[current]
   todoList[current] = before
   todoList[current + 1] = after
+}
+
+const complete = (todo: Todo) => {
+  todo.isComplete = !todo.isComplete
 }
 </script>
 
@@ -95,6 +109,19 @@ const downItem = (current: number) => {
               </form>
             </div>
           </div>
+          <div class="box mt-2">
+            <div class="level">
+              <div class="level-left">
+                <label for="progress-todo">{{ t('common.progress') }}</label>
+              </div>
+              <div class="level-right">
+                <label for="" data-testid="progress-todo-label">
+                  {{ `${countCompleted.length}/${todoList.length}` }}
+                </label>
+              </div>
+            </div>
+            <VProgress id="progress-todo" :value="progress" data-testid="progress-todo" />
+          </div>
         </div>
         <div class="column">
           <div class="card">
@@ -120,7 +147,7 @@ const downItem = (current: number) => {
               <ul class="mt-5">
                 <li v-for="(todo, idx) in filteredTodos" :key="todo.label" class="block">
                   <div class="columns is-align-items-center">
-                    <div class="column">
+                    <div class="column is-1">
                       <VButton
                         class=""
                         colors="white"
@@ -144,7 +171,7 @@ const downItem = (current: number) => {
                         </VIcon>
                       </VButton>
                     </div>
-                    <div class="column is-9">
+                    <div class="column">
                       <h3
                         data-testid="item-todo"
                         class="title is-5"
@@ -156,14 +183,14 @@ const downItem = (current: number) => {
                         {{ t('common.published-date-text', { text: todo.timestamp }) }}
                       </h5>
                     </div>
-                    <div class="column">
+                    <div class="column is-2">
                       <div class="is-flex is-justify-content-right is-align-items-center">
                         <VButton
                           class="mr-2"
                           colors="success"
                           size="sm"
                           data-testid="btn-complete"
-                          @click="todo.isComplete = !todo.isComplete"
+                          @click="complete(todo)"
                         >
                           <VIcon>
                             <i class="bi bi-clipboard-check"></i>

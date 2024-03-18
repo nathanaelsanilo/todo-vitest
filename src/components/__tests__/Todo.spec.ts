@@ -126,4 +126,20 @@ describe('Todo Component', () => {
     expect(wrapper.findAll(todoItem)[1].text()).toBe('dinner')
     // end
   })
+
+  it('it should show progress bar', async () => {
+    const progress = '[data-testid="progress-todo"]'
+    const progressLabel = '[data-testid="progress-todo-label"]'
+    const btnComplete = '[data-testid="btn-complete"]'
+
+    expect(wrapper.find(progress).exists()).toBe(true)
+
+    await addItem()
+
+    expect(wrapper.get(progressLabel).text()).toBe('0/1')
+
+    await wrapper.get(btnComplete).trigger('click')
+
+    expect(wrapper.get(progressLabel).text()).toBe('1/1')
+  })
 })

@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
+import { h } from 'vue'
 import VIcon from './VIcon.vue'
-import { defineComponent, h } from 'vue'
 
 describe('VIcon', () => {
   const wrapper = mount(VIcon, {

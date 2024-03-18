@@ -3,12 +3,14 @@
     "todo-app": "Todo App"
   },
   "common": {
-    "todo": "Todo",
-    "save": "Simpan",
+    "complete": "Selesai",
     "input-text": "Masukan {text}",
-    "new-text": "{text} Baru",
-    "search": "Cari",
     "looking-for": "Melakukan pencarian ",
-    "complete": "Selesai"
+    "new-text": "{text} Baru",
+    "progress": "Proses",
+    "published-date-text": "Tanggal publish {text}",
+    "save": "Simpan",
+    "search": "Cari",
+    "todo": "Todo"
   }
 }

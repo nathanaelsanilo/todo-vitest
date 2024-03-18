@@ -3,13 +3,14 @@
     "todo-app": "Todo App"
   },
   "common": {
-    "todo": "Todo",
-    "save": "Save",
-    "input-text": "Input {text}",
-    "new-text": "New {text}",
-    "search": "Search",
-    "looking-for": "Looking for ",
     "complete": "Complete",
-    "published-date-text": "Published date {text}"
+    "input-text": "Input {text}",
+    "looking-for": "Looking for ",
+    "new-text": "New {text}",
+    "progress": "Progress",
+    "published-date-text": "Published date {text}",
+    "save": "Save",
+    "search": "Search",
+    "todo": "Todo"
   }
 }
