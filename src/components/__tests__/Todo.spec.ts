@@ -142,4 +142,17 @@ describe('Todo Component', () => {
 
     expect(wrapper.get(progressLabel).text()).toBe('1/1')
   })
+
+  it('it allow drag item', async () => {
+    const dragable = '[data-testid="drag-todo"]'
+
+    await addItem('lunch')
+    await addItem('dinner')
+
+    await wrapper.get(dragable).trigger('dragstart')
+    await wrapper.get(dragable).trigger('drag')
+    await wrapper.get(dragable).trigger('dragenter')
+    await wrapper.get(dragable).trigger('drop')
+    // TODO: testing dragable
+  })
 })

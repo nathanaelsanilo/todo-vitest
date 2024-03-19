@@ -8,6 +8,7 @@ import { VButton } from '@/components/VButton'
 import { VIcon } from '@/components/VIcon'
 import { VProgress } from '@/components/VProgress'
 import { VTextField } from '@/components/VTextField'
+import { useSortable } from '@vueuse/integrations/useSortable'
 import dayjs from 'dayjs'
 import { computed, reactive, ref, toValue } from 'vue'
 import { useI18n } from 'vue-i18n'
@@ -20,7 +21,13 @@ interface Todo {
 const { t } = useI18n()
 const inputTodo = ref<string>('')
 const inputSearch = ref<string>('')
+const sortable = ref<HTMLElement | null>(null)
 const todoList = reactive<Todo[]>([])
+
+useSortable(sortable, todoList, {
+  animation: 200,
+  handle: '.handle-grip'
+})
 
 const filteredTodos = computed<Todo[]>(() => {
   return todoList.filter((todo) => {
@@ -144,8 +151,13 @@ const complete = (todo: Todo) => {
               <p class="subtitle is-6 has-text-centered mt-2">
                 {{ `${t('common.looking-for')} "${inputSearch}"` }}
               </p>
-              <ul class="mt-5">
-                <li v-for="(todo, idx) in filteredTodos" :key="todo.label" class="block">
+              <ul ref="sortable" class="mt-5">
+                <li
+                  v-for="(todo, idx) in filteredTodos"
+                  :key="todo.label"
+                  class="block"
+                  data-testid="drag-todo"
+                >
                   <div class="columns is-align-items-center">
                     <div class="column is-1">
                       <VButton
@@ -174,7 +186,7 @@ const complete = (todo: Todo) => {
                     <div class="column">
                       <h3
                         data-testid="item-todo"
-                        class="title is-5"
+                        class="title is-5 handle-grip"
                         :class="{ 'is-complete': todo.isComplete }"
                       >
                         {{ todo.label }}
@@ -223,5 +235,9 @@ const complete = (todo: Todo) => {
 <style scoped>
 .is-complete {
   text-decoration: line-through;
+}
+
+.handle-grip {
+  cursor: move;
 }
 </style>
