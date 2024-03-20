@@ -12,6 +12,7 @@ import { useSortable } from '@vueuse/integrations/useSortable'
 import dayjs from 'dayjs'
 import { computed, reactive, ref, toValue } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { VCard } from '@/components/VCard'
 
 interface Todo {
   label: string
@@ -91,13 +92,8 @@ const complete = (todo: Todo) => {
       <h1 class="title">{{ t('title.todo-app') }}</h1>
       <div class="columns">
         <div class="column is-5">
-          <div class="card">
-            <div class="card-header">
-              <p class="card-header-title">
-                {{ t('common.input-text', { text: t('common.todo') }) }}
-              </p>
-            </div>
-            <div class="card-content">
+          <VCard :title="t('common.input-text', { text: t('common.todo') })">
+            <template #content>
               <form novalidate @submit.prevent="addTodo">
                 <VTextField
                   id="inputTodo"
@@ -114,8 +110,8 @@ const complete = (todo: Todo) => {
                   </div>
                 </div>
               </form>
-            </div>
-          </div>
+            </template>
+          </VCard>
           <div class="box mt-2">
             <div class="level">
               <div class="level-left">
@@ -131,13 +127,8 @@ const complete = (todo: Todo) => {
           </div>
         </div>
         <div class="column">
-          <div class="card">
-            <div class="card-header">
-              <p class="card-header-title">
-                {{ t('common.todo') }}
-              </p>
-            </div>
-            <div class="card-content">
+          <VCard :title="t('common.todo')">
+            <template #content>
               <div>
                 <VTextField
                   id="input-search"
@@ -224,8 +215,8 @@ const complete = (todo: Todo) => {
                   </div>
                 </li>
               </ul>
-            </div>
-          </div>
+            </template>
+          </VCard>
         </div>
       </div>
     </div>
