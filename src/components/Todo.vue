@@ -5,25 +5,21 @@ export default {
 </script>
 <script lang="ts" setup>
 import { VButton } from '@/components/VButton'
+import { VCard } from '@/components/VCard'
 import { VIcon } from '@/components/VIcon'
 import { VProgress } from '@/components/VProgress'
 import { VTextField } from '@/components/VTextField'
+import { useTodo } from '@/composables/useTodo'
+import { Todo } from '@/models/Todo'
 import { useSortable } from '@vueuse/integrations/useSortable'
-import dayjs from 'dayjs'
-import { computed, reactive, ref, toValue } from 'vue'
+import { computed, ref, toValue } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { VCard } from '@/components/VCard'
 
-interface Todo {
-  label: string
-  isComplete: boolean
-  timestamp: string
-}
 const { t } = useI18n()
-const inputTodo = ref<string>('')
 const inputSearch = ref<string>('')
 const sortable = ref<HTMLElement | null>(null)
-const todoList = reactive<Todo[]>([])
+
+const { inputTodo, todoList, addTodo } = useTodo()
 
 useSortable(sortable, todoList, {
   animation: 200,
@@ -48,15 +44,6 @@ const progress = computed<number>(() => {
   const completeTask = todoList.filter((record) => record.isComplete).length
   return Math.ceil((completeTask / total) * 100)
 })
-
-const addTodo = () => {
-  todoList.push({
-    label: inputTodo.value,
-    isComplete: false,
-    timestamp: dayjs().format('D MMM, H:m')
-  })
-  inputTodo.value = ''
-}
 
 const deleteTodo = (todo: string) => {
   const filtered = [...todoList].filter((e) => e.label !== todo)
