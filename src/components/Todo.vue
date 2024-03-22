@@ -12,28 +12,18 @@ import { VTextField } from '@/components/VTextField'
 import { useTodo } from '@/composables/useTodo'
 import { Todo } from '@/models/Todo'
 import { useSortable } from '@vueuse/integrations/useSortable'
-import { computed, ref, toValue } from 'vue'
+import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
 const inputSearch = ref<string>('')
 const sortable = ref<HTMLElement | null>(null)
 
-const { inputTodo, todoList, addTodo } = useTodo()
+const { inputTodo, todoList, filtered, addTodo } = useTodo()
 
 useSortable(sortable, todoList, {
   animation: 200,
   handle: '.handle-grip'
-})
-
-const filteredTodos = computed<Todo[]>(() => {
-  return todoList.filter((todo) => {
-    if (toValue(inputSearch)) {
-      return todo.label.toUpperCase().includes(toValue(inputSearch).toUpperCase())
-    }
-
-    return todo
-  })
 })
 
 const countCompleted = computed(() => todoList.filter((record) => record.isComplete))
@@ -131,7 +121,7 @@ const complete = (todo: Todo) => {
               </p>
               <ul ref="sortable" class="mt-5">
                 <li
-                  v-for="(todo, idx) in filteredTodos"
+                  v-for="(todo, idx) in filtered"
                   :key="todo.label"
                   class="block"
                   data-testid="drag-todo"
