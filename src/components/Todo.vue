@@ -19,7 +19,7 @@ const { t } = useI18n()
 const inputSearch = ref<string>('')
 const sortable = ref<HTMLElement | null>(null)
 
-const { inputTodo, todoList, filtered, addTodo } = useTodo()
+const { inputTodo, todoList, filtered, addTodo, deleteTodo } = useTodo()
 
 useSortable(sortable, todoList, {
   animation: 200,
@@ -34,12 +34,6 @@ const progress = computed<number>(() => {
   const completeTask = todoList.filter((record) => record.isComplete).length
   return Math.ceil((completeTask / total) * 100)
 })
-
-const deleteTodo = (todo: string) => {
-  const filtered = [...todoList].filter((e) => e.label !== todo)
-  todoList.length = 0
-  todoList.push(...filtered)
-}
 
 const upItem = (current: number) => {
   if (current === 0) return

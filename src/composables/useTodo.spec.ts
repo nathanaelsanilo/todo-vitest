@@ -1,6 +1,7 @@
 import { Todo } from '@/models/Todo'
 import { get, set } from '@vueuse/core'
 import { describe, expect, it } from 'vitest'
+import { toValue } from 'vue'
 import { useTodo } from './useTodo'
 
 describe('useTodo', () => {
@@ -30,5 +31,16 @@ describe('useTodo', () => {
     set(inputSearch, 'din')
 
     expect(get(filtered)[0].label).toEqual('dinner')
+  })
+
+  it('it should able to remove todo', () => {
+    const { inputTodo, filtered, addTodo, deleteTodo } = useTodo()
+
+    inputTodo.value = 'lunch'
+    addTodo()
+
+    deleteTodo('lunch')
+
+    expect(toValue(filtered).length).toBe(0)
   })
 })

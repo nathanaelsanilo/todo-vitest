@@ -13,6 +13,12 @@ export function useTodo() {
     inputTodo.value = ''
   }
 
+  function deleteTodo(todo: string) {
+    const filtered = [...todoList].filter((e) => e.label !== todo)
+    todoList.length = 0
+    todoList.push(...filtered)
+  }
+
   const filtered = computed(() => {
     return todoList.filter((todo) => {
       if (unref(inputSearch)) {
@@ -24,6 +30,7 @@ export function useTodo() {
   })
 
   return {
+    deleteTodo,
     addTodo,
     filtered,
     inputSearch,
