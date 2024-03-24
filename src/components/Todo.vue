@@ -10,7 +10,6 @@ import { VIcon } from '@/components/VIcon'
 import { VProgress } from '@/components/VProgress'
 import { VTextField } from '@/components/VTextField'
 import { useTodo } from '@/composables/useTodo'
-import { Todo } from '@/models/Todo'
 import { useSortable } from '@vueuse/integrations/useSortable'
 import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
@@ -19,7 +18,7 @@ const { t } = useI18n()
 const inputSearch = ref<string>('')
 const sortable = ref<HTMLElement | null>(null)
 
-const { inputTodo, todoList, filtered, addTodo, deleteTodo } = useTodo()
+const { inputTodo, todoList, filtered, addTodo, deleteTodo, complete } = useTodo()
 
 useSortable(sortable, todoList, {
   animation: 200,
@@ -50,10 +49,6 @@ const downItem = (current: number) => {
   const after = todoList[current]
   todoList[current] = before
   todoList[current + 1] = after
-}
-
-const complete = (todo: Todo) => {
-  todo.isComplete = !todo.isComplete
 }
 </script>
 

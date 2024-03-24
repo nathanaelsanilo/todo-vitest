@@ -13,6 +13,10 @@ export function useTodo() {
     inputTodo.value = ''
   }
 
+  function complete(todo: Todo) {
+    todo.isComplete = !todo.isComplete
+  }
+
   function deleteTodo(todo: string) {
     const filtered = [...todoList].filter((e) => e.label !== todo)
     todoList.length = 0
@@ -32,6 +36,7 @@ export function useTodo() {
   return {
     deleteTodo,
     addTodo,
+    complete,
     filtered,
     inputSearch,
     inputTodo,
