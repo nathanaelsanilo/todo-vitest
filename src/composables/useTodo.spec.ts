@@ -54,4 +54,15 @@ describe('useTodo', () => {
 
     expect(filtered.value[0].isComplete).toBe(true)
   })
+
+  it('it should count completed todo', () => {
+    const { inputTodo, filtered, addTodo, complete, countCompleted } = useTodo()
+
+    inputTodo.value = 'lunch'
+    addTodo()
+
+    complete(filtered.value[0])
+
+    expect(toValue(countCompleted)).toBe(1)
+  })
 })

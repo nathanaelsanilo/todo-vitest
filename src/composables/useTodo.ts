@@ -33,6 +33,10 @@ export function useTodo() {
     })
   })
 
+  const countCompleted = computed<number>(() => {
+    return todoList.filter((todo) => todo.isComplete).length
+  })
+
   return {
     deleteTodo,
     addTodo,
@@ -40,6 +44,7 @@ export function useTodo() {
     filtered,
     inputSearch,
     inputTodo,
-    todoList
+    todoList,
+    countCompleted
   }
 }
