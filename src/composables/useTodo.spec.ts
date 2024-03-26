@@ -65,4 +65,18 @@ describe('useTodo', () => {
 
     expect(toValue(countCompleted)).toBe(1)
   })
+
+  it('it should increment todo order', () => {
+    const { inputTodo, todoList, increment, addTodo } = useTodo()
+
+    inputTodo.value = 'lunch'
+    addTodo()
+
+    inputTodo.value = 'dinner'
+    addTodo()
+
+    increment(1)
+
+    expect(todoList[0].label).toBe('dinner')
+  })
 })

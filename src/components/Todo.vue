@@ -18,14 +18,13 @@ const { t } = useI18n()
 const inputSearch = ref<string>('')
 const sortable = ref<HTMLElement | null>(null)
 
-const { inputTodo, todoList, filtered, addTodo, deleteTodo, complete } = useTodo()
+const { inputTodo, todoList, filtered, countCompleted, addTodo, deleteTodo, complete, increment } =
+  useTodo()
 
 useSortable(sortable, todoList, {
   animation: 200,
   handle: '.handle-grip'
 })
-
-const countCompleted = computed(() => todoList.filter((record) => record.isComplete))
 
 const progress = computed<number>(() => {
   const total = todoList.length
@@ -33,14 +32,6 @@ const progress = computed<number>(() => {
   const completeTask = todoList.filter((record) => record.isComplete).length
   return Math.ceil((completeTask / total) * 100)
 })
-
-const upItem = (current: number) => {
-  if (current === 0) return
-  const before = todoList[current - 1]
-  const after = todoList[current]
-  todoList[current] = before
-  todoList[current - 1] = after
-}
 
 const downItem = (current: number) => {
   if (current === todoList.length) return
@@ -85,7 +76,7 @@ const downItem = (current: number) => {
               </div>
               <div class="level-right">
                 <label for="" data-testid="progress-todo-label">
-                  {{ `${countCompleted.length}/${todoList.length}` }}
+                  {{ `${countCompleted}/${todoList.length}` }}
                 </label>
               </div>
             </div>
@@ -122,7 +113,7 @@ const downItem = (current: number) => {
                         colors="white"
                         size="sm"
                         data-testid="arrow-up"
-                        @click="upItem(idx)"
+                        @click="increment(idx)"
                       >
                         <VIcon>
                           <i class="bi bi-arrow-up"></i>

@@ -37,10 +37,19 @@ export function useTodo() {
     return todoList.filter((todo) => todo.isComplete).length
   })
 
+  function increment(current: number) {
+    if (current === 0) return
+    const before = todoList[current - 1]
+    const after = todoList[current]
+    todoList[current] = before
+    todoList[current - 1] = after
+  }
+
   return {
     deleteTodo,
     addTodo,
     complete,
+    increment,
     filtered,
     inputSearch,
     inputTodo,
