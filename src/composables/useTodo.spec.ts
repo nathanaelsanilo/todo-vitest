@@ -93,4 +93,22 @@ describe('useTodo', () => {
 
     expect(todoList[0].label).toBe('dinner')
   })
+
+  it('it should count progress', () => {
+    const { inputTodo, todoList, addTodo, progress, complete } = useTodo()
+
+    inputTodo.value = 'lunch'
+    addTodo()
+
+    inputTodo.value = 'dinner'
+    addTodo()
+
+    complete(todoList[0])
+
+    expect(toValue(progress)).toBe(50)
+
+    complete(todoList[1])
+
+    expect(toValue(progress)).toBe(100)
+  })
 })

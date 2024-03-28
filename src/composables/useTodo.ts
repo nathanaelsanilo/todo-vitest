@@ -54,6 +54,13 @@ export function useTodo() {
     todoList[current + 1] = after
   }
 
+  const progress = computed(() => {
+    const total = todoList.length
+    if (total === 0) return 0
+    const completeTask = todoList.filter((record) => record.isComplete).length
+    return Math.ceil((completeTask / total) * 100)
+  })
+
   return {
     decrement,
     deleteTodo,
@@ -64,6 +71,7 @@ export function useTodo() {
     inputSearch,
     inputTodo,
     todoList,
+    progress,
     countCompleted
   }
 }

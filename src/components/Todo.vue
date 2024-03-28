@@ -11,7 +11,7 @@ import { VProgress } from '@/components/VProgress'
 import { VTextField } from '@/components/VTextField'
 import { useTodo } from '@/composables/useTodo'
 import { useSortable } from '@vueuse/integrations/useSortable'
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
@@ -23,6 +23,7 @@ const {
   todoList,
   filtered,
   countCompleted,
+  progress,
   addTodo,
   deleteTodo,
   complete,
@@ -33,13 +34,6 @@ const {
 useSortable(sortable, todoList, {
   animation: 200,
   handle: '.handle-grip'
-})
-
-const progress = computed<number>(() => {
-  const total = todoList.length
-  if (total === 0) return 0
-  const completeTask = todoList.filter((record) => record.isComplete).length
-  return Math.ceil((completeTask / total) * 100)
 })
 </script>
 
