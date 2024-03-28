@@ -45,7 +45,17 @@ export function useTodo() {
     todoList[current - 1] = after
   }
 
+  function decrement(current: number) {
+    if (current === todoList.length) return
+
+    const before = todoList[current + 1]
+    const after = todoList[current]
+    todoList[current] = before
+    todoList[current + 1] = after
+  }
+
   return {
+    decrement,
     deleteTodo,
     addTodo,
     complete,

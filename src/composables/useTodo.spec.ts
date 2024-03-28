@@ -79,4 +79,18 @@ describe('useTodo', () => {
 
     expect(todoList[0].label).toBe('dinner')
   })
+
+  it('it should decrement todo order', () => {
+    const { inputTodo, todoList, decrement, addTodo } = useTodo()
+
+    inputTodo.value = 'lunch'
+    addTodo()
+
+    inputTodo.value = 'dinner'
+    addTodo()
+
+    decrement(0)
+
+    expect(todoList[0].label).toBe('dinner')
+  })
 })
