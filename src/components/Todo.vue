@@ -15,7 +15,6 @@ import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
-const inputSearch = ref<string>('')
 const sortable = ref<HTMLElement | null>(null)
 
 const {
@@ -24,6 +23,7 @@ const {
   filtered,
   countCompleted,
   progress,
+  inputSearch,
   addTodo,
   deleteTodo,
   complete,
@@ -174,7 +174,7 @@ useSortable(sortable, todoList, {
   </section>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .is-complete {
   text-decoration: line-through;
 }
