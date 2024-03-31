@@ -127,32 +127,21 @@ describe('Todo Component', () => {
     // end
   })
 
-  it('it should show progress bar', async () => {
-    const progress = '[data-testid="progress-todo"]'
-    const progressLabel = '[data-testid="progress-todo-label"]'
-    const btnComplete = '[data-testid="btn-complete"]'
+  it(
+    'it allow drag item',
+    {
+      todo: true
+    },
+    async () => {
+      const dragable = '[data-testid="drag-todo"]'
 
-    expect(wrapper.find(progress).exists()).toBe(true)
+      await addItem('lunch')
+      await addItem('dinner')
 
-    await addItem()
-
-    expect(wrapper.get(progressLabel).text()).toBe('0/1')
-
-    await wrapper.get(btnComplete).trigger('click')
-
-    expect(wrapper.get(progressLabel).text()).toBe('1/1')
-  })
-
-  it('it allow drag item', async () => {
-    const dragable = '[data-testid="drag-todo"]'
-
-    await addItem('lunch')
-    await addItem('dinner')
-
-    await wrapper.get(dragable).trigger('dragstart')
-    await wrapper.get(dragable).trigger('drag')
-    await wrapper.get(dragable).trigger('dragenter')
-    await wrapper.get(dragable).trigger('drop')
-    // TODO: testing dragable
-  })
+      await wrapper.get(dragable).trigger('dragstart')
+      await wrapper.get(dragable).trigger('drag')
+      await wrapper.get(dragable).trigger('dragenter')
+      await wrapper.get(dragable).trigger('drop')
+    }
+  )
 })

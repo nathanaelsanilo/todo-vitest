@@ -8,12 +8,13 @@ import { VButton } from '@/components/VButton'
 import { VCard } from '@/components/VCard'
 import { VColumn, VColumns } from '@/components/VColumns'
 import { VIcon } from '@/components/VIcon'
-import { VProgress } from '@/components/VProgress'
 import { VTextField } from '@/components/VTextField'
 import { useTodo } from '@/composables/useTodo'
+import { formatDate } from '@/utils/Date'
 import { useSortable } from '@vueuse/integrations/useSortable'
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+import ProgressCounter from './ProgressCounter.vue'
 
 const { t } = useI18n()
 const sortable = ref<HTMLElement | null>(null)
@@ -64,19 +65,8 @@ useSortable(sortable, todoList, {
               </form>
             </template>
           </VCard>
-          <div class="box mt-2">
-            <div class="level">
-              <div class="level-left">
-                <label for="progress-todo">{{ t('common.progress') }}</label>
-              </div>
-              <div class="level-right">
-                <label for="" data-testid="progress-todo-label">
-                  {{ `${countCompleted}/${todoList.length}` }}
-                </label>
-              </div>
-            </div>
-            <VProgress id="progress-todo" :value="progress" data-testid="progress-todo" />
-          </div>
+
+          <ProgressCounter :completed="countCompleted" :todos="todoList" :progress="progress" />
         </VColumn>
         <VColumn>
           <VCard :title="t('common.todo')">
@@ -131,7 +121,7 @@ useSortable(sortable, todoList, {
                         {{ todo.label }}
                       </h3>
                       <h5 class="subtitle is-7" data-testid="timestamp-todo">
-                        {{ t('common.published-date-text', { text: todo.timestamp }) }}
+                        {{ t('common.published-date-text', { text: formatDate(todo.timestamp) }) }}
                       </h5>
                     </VColumn>
                     <VColumn grid-size="2">
@@ -148,7 +138,6 @@ useSortable(sortable, todoList, {
                           </VIcon>
                         </VButton>
                         <VButton
-                          class="level-item"
                           size="sm"
                           colors="danger"
                           data-testid="btn-delete"

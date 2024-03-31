@@ -1,14 +1,13 @@
-import { formatDate } from '@/utils/Date'
-import dayjs from 'dayjs'
+import dayjs, { type Dayjs } from 'dayjs'
 
 export interface ITodo {
   label: string
   isComplete: boolean
-  timestamp: string
+  timestamp: Dayjs
 }
 
 export class Todo implements ITodo {
   isComplete = false
   label = ''
-  timestamp = formatDate(dayjs())
+  timestamp = dayjs()
 }
