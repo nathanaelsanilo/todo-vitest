@@ -1,6 +1,9 @@
 import './assets/main.scss'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 
+// tsyringe
+import 'reflect-metadata'
+
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import App from './App.vue'
