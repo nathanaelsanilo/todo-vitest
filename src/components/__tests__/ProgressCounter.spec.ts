@@ -1,12 +1,11 @@
+import { Todo } from '@/models/Todo'
 import { mount, type VueWrapper } from '@vue/test-utils'
+import dayjs from 'dayjs'
 import { beforeEach, describe, expect, it } from 'vitest'
 import ProgressCounter from '../ProgressCounter.vue'
-import { Todo } from '@/models/Todo'
-import dayjs from 'dayjs'
-import { i18n } from '@/modules/i18n'
 
 describe('ProgressCounter Component', () => {
-  let wrapper: VueWrapper
+  let wrapper: VueWrapper<InstanceType<typeof ProgressCounter>>
 
   beforeEach(() => {
     const todo = new Todo()
@@ -21,12 +20,6 @@ describe('ProgressCounter Component', () => {
         completed: 1,
         progress: 1,
         todos: dummy
-      },
-      global: {
-        plugins: [i18n],
-        mocks: {
-          t: (key: string) => key
-        }
       }
     })
   })

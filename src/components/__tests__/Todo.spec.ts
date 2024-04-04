@@ -1,10 +1,9 @@
 import Todo from '@/components/Todo.vue'
-import { i18n } from '@/modules/i18n'
 import { VueWrapper, mount } from '@vue/test-utils'
 import { beforeEach, describe, expect, it } from 'vitest'
 
 describe('Todo Component', () => {
-  let wrapper: VueWrapper
+  let wrapper: VueWrapper<InstanceType<typeof Todo>>
   const txtInput = '[data-testid="input-todo"]'
   const btnAdd = '[data-testid="btn-add"]'
   const todoItem = '[data-testid="item-todo"]'
@@ -18,14 +17,7 @@ describe('Todo Component', () => {
   }
 
   beforeEach(() => {
-    wrapper = mount(Todo, {
-      global: {
-        plugins: [i18n],
-        mocks: {
-          t: (key: string) => key
-        }
-      }
-    })
+    wrapper = mount(Todo)
 
     return () => wrapper.unmount()
   })
