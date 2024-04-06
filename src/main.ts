@@ -2,7 +2,7 @@
 // look https://github.com/microsoft/tsyringe/issues/180#issuecomment-982651609
 import '@abraham/reflection'
 
-import './ioc'
+import './container'
 
 import './assets/main.scss'
 import 'bootstrap-icons/font/bootstrap-icons.css'
