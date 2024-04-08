@@ -1,8 +1,3 @@
-<script lang="ts">
-export default {
-  name: 'TodoVue'
-}
-</script>
 <script lang="ts" setup>
 import { VButton } from '@/components/VButton'
 import { VCard } from '@/components/VCard'
@@ -15,6 +10,10 @@ import { useSortable } from '@vueuse/integrations/useSortable'
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import ProgressCounter from './ProgressCounter.vue'
+
+defineOptions({
+  name: 'TodoVue'
+})
 
 const { t } = useI18n()
 const sortable = ref<HTMLElement | null>(null)
