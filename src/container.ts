@@ -1,11 +1,7 @@
-import { TodoRepository } from '@/repository/TodoRepository'
-import { TodoService } from '@/services/TodoService'
+import { TodoRepositoryToken } from '@/models/Injection'
+import { TodoRepositoryImpl } from '@/repository/TodoRepositoryImpl'
 import { container } from 'tsyringe'
-import { TodoRepositoryToken, TodoServiceToken } from '@/models/Injection'
 
-container.register(TodoServiceToken, {
-  useClass: TodoService
-})
 container.register(TodoRepositoryToken, {
-  useClass: TodoRepository
+  useClass: TodoRepositoryImpl
 })
