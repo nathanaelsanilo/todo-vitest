@@ -1,7 +1,10 @@
 import { Todo } from '@/models/Todo'
+import { TodoService } from '@/services/TodoService'
+import { resolver } from '@/utils/Resolver'
 import { computed, reactive, ref, unref } from 'vue'
 
 export function useTodo() {
+  const todoService = resolver(TodoService)
   const inputTodo = ref('')
   const todoList = reactive<Todo[]>([])
   const inputSearch = ref('')
@@ -9,7 +12,11 @@ export function useTodo() {
   function addTodo() {
     const todo = new Todo()
     todo.label = inputTodo.value
-    todoList.push(todo)
+
+    const newTodo = todoService.addTodo(todo)
+
+    todoList.push(newTodo)
+
     inputTodo.value = ''
   }
 

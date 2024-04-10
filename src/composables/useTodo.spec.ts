@@ -1,14 +1,29 @@
 import { Todo } from '@/models/Todo'
-import { get, set } from '@vueuse/core'
-import { describe, expect, it } from 'vitest'
+import { setup } from '@/test/setup'
+import { set } from '@vueuse/core'
+import { container } from 'tsyringe'
+import { afterAll, afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { toValue } from 'vue'
 import { useTodo } from './useTodo'
 
 describe('useTodo', () => {
+  beforeEach(() => {
+    const { init } = setup()
+
+    init()
+  })
+
+  afterEach(() => {
+    vi.clearAllMocks()
+    container.reset()
+  })
+
+  afterAll(() => {
+    container.clearInstances()
+  })
+
   it('it should add new todo', () => {
     const { inputTodo, todoList, addTodo } = useTodo()
-
-    inputTodo.value = 'lunch'
 
     const todo = new Todo()
     todo.label = 'lunch'
@@ -20,23 +35,20 @@ describe('useTodo', () => {
   })
 
   it('it should able to search todo', () => {
-    const { inputSearch, inputTodo, filtered, addTodo } = useTodo()
+    const { inputSearch, filtered, addTodo } = useTodo()
 
-    inputTodo.value = 'lunch'
     addTodo()
 
-    inputTodo.value = 'dinner'
     addTodo()
 
     set(inputSearch, 'din')
 
-    expect(get(filtered)[0].label).toEqual('dinner')
+    expect(toValue(filtered)[0].label).toEqual('dinner')
   })
 
   it('it should able to remove todo', () => {
-    const { inputTodo, filtered, addTodo, deleteTodo } = useTodo()
+    const { filtered, addTodo, deleteTodo } = useTodo()
 
-    inputTodo.value = 'lunch'
     addTodo()
 
     deleteTodo('lunch')
@@ -45,9 +57,8 @@ describe('useTodo', () => {
   })
 
   it('it should able to complete todo', () => {
-    const { inputTodo, filtered, addTodo, complete } = useTodo()
+    const { filtered, addTodo, complete } = useTodo()
 
-    inputTodo.value = 'lunch'
     addTodo()
 
     complete(filtered.value[0])
@@ -55,24 +66,22 @@ describe('useTodo', () => {
     expect(filtered.value[0].isComplete).toBe(true)
   })
 
-  it('it should count completed todo', () => {
-    const { inputTodo, filtered, addTodo, complete, countCompleted } = useTodo()
+  it('it should count completed todo', { skip: false }, () => {
+    const { todoList, addTodo, complete, countCompleted } = useTodo()
 
-    inputTodo.value = 'lunch'
     addTodo()
+    expect(todoList.length).toBe(1)
 
-    complete(filtered.value[0])
+    complete(todoList[0])
 
     expect(toValue(countCompleted)).toBe(1)
   })
 
   it('it should increment todo order', () => {
-    const { inputTodo, todoList, increment, addTodo } = useTodo()
+    const { todoList, increment, addTodo } = useTodo()
 
-    inputTodo.value = 'lunch'
     addTodo()
 
-    inputTodo.value = 'dinner'
     addTodo()
 
     increment(1)
@@ -81,12 +90,10 @@ describe('useTodo', () => {
   })
 
   it('it should decrement todo order', () => {
-    const { inputTodo, todoList, decrement, addTodo } = useTodo()
+    const { todoList, decrement, addTodo } = useTodo()
 
-    inputTodo.value = 'lunch'
     addTodo()
 
-    inputTodo.value = 'dinner'
     addTodo()
 
     decrement(0)
@@ -95,12 +102,10 @@ describe('useTodo', () => {
   })
 
   it('it should count progress', () => {
-    const { inputTodo, todoList, addTodo, progress, complete } = useTodo()
+    const { todoList, addTodo, progress, complete } = useTodo()
 
-    inputTodo.value = 'lunch'
     addTodo()
 
-    inputTodo.value = 'dinner'
     addTodo()
 
     complete(todoList[0])

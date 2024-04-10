@@ -1,6 +1,8 @@
 import Todo from '@/components/Todo.vue'
+import { setup } from '@/test/setup'
 import { VueWrapper, mount } from '@vue/test-utils'
-import { beforeEach, describe, expect, it } from 'vitest'
+import { container } from 'tsyringe'
+import { afterAll, afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 describe('Todo Component', () => {
   let wrapper: VueWrapper<InstanceType<typeof Todo>>
@@ -17,9 +19,22 @@ describe('Todo Component', () => {
   }
 
   beforeEach(() => {
+    const { init } = setup()
+
+    init()
+
     wrapper = mount(Todo)
 
     return () => wrapper.unmount()
+  })
+
+  afterEach(() => {
+    vi.clearAllMocks()
+    container.reset()
+  })
+
+  afterAll(() => {
+    container.clearInstances()
   })
 
   it('it should render component', () => {
