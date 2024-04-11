@@ -1,14 +1,17 @@
 import { mount, type VueWrapper } from '@vue/test-utils'
-import { beforeEach, describe } from 'node:test'
-import { it } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 import VColumns from './VColumns.vue'
 
 describe('VColumns', () => {
-  let wrapper: VueWrapper
+  let wrapper: VueWrapper<InstanceType<typeof VColumns>>
 
   beforeEach(() => {
     wrapper = mount(VColumns)
+
+    return () => wrapper.unmount()
   })
 
-  it('it should render VColumns', () => {})
+  it('it should render VColumns', () => {
+    expect(wrapper.classes('columns')).toBe(true)
+  })
 })

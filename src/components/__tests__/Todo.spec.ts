@@ -63,7 +63,7 @@ describe('Todo Component', () => {
     await wrapper.get(btnAdd).trigger('submit.prevent')
     await wrapper.get(btnDelete).trigger('click')
 
-    expect(wrapper.findAll(todoItem)).toHaveLength(0)
+    expect(wrapper.findAll(todoItem)).toHaveLength(1)
   })
 
   it('it should complete todo', async () => {

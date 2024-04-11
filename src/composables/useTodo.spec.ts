@@ -34,32 +34,38 @@ describe('useTodo', () => {
     expect(inputTodo.value).toBeFalsy()
   })
 
+  it('it should able to get all todos', () => {
+    const { mockAllTodo } = setup()
+    const mockData = mockAllTodo()
+
+    const { getAll } = useTodo()
+
+    expect(getAll()).toEqual(mockData)
+  })
+
   it('it should able to search todo', () => {
-    const { inputSearch, filtered, addTodo } = useTodo()
+    const { inputSearch, filtered, getAll } = useTodo()
 
-    addTodo()
+    getAll()
 
-    addTodo()
-
+    expect(toValue(filtered).length).toBe(2)
     set(inputSearch, 'din')
-
     expect(toValue(filtered)[0].label).toEqual('dinner')
   })
 
   it('it should able to remove todo', () => {
-    const { filtered, addTodo, deleteTodo } = useTodo()
+    const { filtered, deleteTodo, getAll } = useTodo()
 
-    addTodo()
+    getAll()
+    deleteTodo('dinner')
 
-    deleteTodo('lunch')
-
-    expect(toValue(filtered).length).toBe(0)
+    expect(toValue(filtered).length).toBe(1)
   })
 
   it('it should able to complete todo', () => {
-    const { filtered, addTodo, complete } = useTodo()
+    const { filtered, getAll, complete } = useTodo()
 
-    addTodo()
+    getAll()
 
     complete(filtered.value[0])
 
@@ -67,10 +73,10 @@ describe('useTodo', () => {
   })
 
   it('it should count completed todo', { skip: false }, () => {
-    const { todoList, addTodo, complete, countCompleted } = useTodo()
+    const { todoList, getAll, complete, countCompleted } = useTodo()
 
-    addTodo()
-    expect(todoList.length).toBe(1)
+    getAll()
+    expect(todoList.length).toBe(2)
 
     complete(todoList[0])
 
@@ -78,23 +84,18 @@ describe('useTodo', () => {
   })
 
   it('it should increment todo order', () => {
-    const { todoList, increment, addTodo } = useTodo()
+    const { todoList, increment, getAll } = useTodo()
 
-    addTodo()
-
-    addTodo()
-
+    getAll()
     increment(1)
 
     expect(todoList[0].label).toBe('dinner')
   })
 
   it('it should decrement todo order', () => {
-    const { todoList, decrement, addTodo } = useTodo()
+    const { todoList, decrement, getAll } = useTodo()
 
-    addTodo()
-
-    addTodo()
+    getAll()
 
     decrement(0)
 
@@ -102,11 +103,9 @@ describe('useTodo', () => {
   })
 
   it('it should count progress', () => {
-    const { todoList, addTodo, progress, complete } = useTodo()
+    const { todoList, getAll, progress, complete } = useTodo()
 
-    addTodo()
-
-    addTodo()
+    getAll()
 
     complete(todoList[0])
 

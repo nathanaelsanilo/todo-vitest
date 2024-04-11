@@ -10,16 +10,21 @@ export function setup() {
     return mockTodo
   }
 
+  function mockAllTodo() {
+    return [mockTodoBuilder('lunch'), mockTodoBuilder('dinner')]
+  }
+
   function init() {
     container.register(TodoRepositoryToken, {
       useClass: vi.fn().mockImplementation(() => ({
         save: vi
           .fn()
           .mockReturnValueOnce(mockTodoBuilder('lunch'))
-          .mockReturnValueOnce(mockTodoBuilder('dinner'))
+          .mockReturnValueOnce(mockTodoBuilder('dinner')),
+        findAll: vi.fn(() => [...mockAllTodo()])
       }))
     })
   }
 
-  return { init }
+  return { init, mockAllTodo, mockTodoBuilder }
 }

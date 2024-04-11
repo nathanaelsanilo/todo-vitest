@@ -13,11 +13,18 @@ export function useTodo() {
     const todo = new Todo()
     todo.label = inputTodo.value
 
-    const newTodo = todoService.addTodo(todo)
+    todoService.addTodo(todo)
 
-    todoList.push(newTodo)
+    getAll()
 
     inputTodo.value = ''
+  }
+
+  function getAll(): Todo[] {
+    const data = todoService.getAll()
+    todoList.length = 0
+    todoList.push(...data)
+    return data
   }
 
   function complete(todo: Todo) {
@@ -74,6 +81,7 @@ export function useTodo() {
     addTodo,
     complete,
     increment,
+    getAll,
     filtered,
     inputSearch,
     inputTodo,
