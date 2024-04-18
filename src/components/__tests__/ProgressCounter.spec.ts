@@ -1,6 +1,5 @@
-import { Todo } from '@/models/Todo'
 import { mount, type VueWrapper } from '@vue/test-utils'
-import dayjs from 'dayjs'
+import { useDateFormat, useNow } from '@vueuse/core'
 import { beforeEach, describe, expect, it } from 'vitest'
 import ProgressCounter from '../ProgressCounter.vue'
 
@@ -8,20 +7,24 @@ describe('ProgressCounter Component', () => {
   let wrapper: VueWrapper<InstanceType<typeof ProgressCounter>>
 
   beforeEach(() => {
-    const todo = new Todo()
-    todo.isComplete = true
-    todo.label = 'lunch'
-    todo.timestamp = dayjs()
-
-    const dummy = [todo]
-
     wrapper = mount(ProgressCounter, {
       props: {
         completed: 1,
         progress: 1,
-        todos: dummy
+        todos: [
+          {
+            description: 'lunch',
+            id: 1,
+            is_complete: true,
+            timestamp: useDateFormat(useNow()).value
+          }
+        ]
       }
     })
+  })
+
+  it('should render correctly', () => {
+    expect(wrapper).toBeDefined()
   })
 
   it('it should show total todo', () => {

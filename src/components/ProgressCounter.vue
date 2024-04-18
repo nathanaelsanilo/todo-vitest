@@ -1,17 +1,17 @@
 <script lang="ts" setup>
 import { VProgress } from '@/components/VProgress'
-import type { Todo } from '@/models/Todo'
+import type { TodoListDto } from '@/dtos/TodoListDto'
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 const props = withDefaults(
   defineProps<{
     completed: number
-    todos: Todo[]
+    todos: TodoListDto[]
     progress: number
   }>(),
   {
-    todos: (): Todo[] => []
+    todos: (): TodoListDto[] => []
   }
 )
 
