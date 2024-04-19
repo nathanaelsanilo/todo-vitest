@@ -1,5 +1,7 @@
+import type { TodoCreateDto } from '@/dtos/TodoCreateDto'
+import type { TodoDetailDto } from '@/dtos/TodoDetailDto'
+import type { TodoListDto } from '@/dtos/TodoListDto'
 import { TodoRepositoryToken } from '@/models/Injection'
-import type { Todo } from '@/models/Todo'
 import type { TodoRepository } from '@/repository/TodoRepository'
 import { inject, injectable } from 'tsyringe'
 
@@ -10,11 +12,11 @@ import { inject, injectable } from 'tsyringe'
 export class TodoService {
   constructor(@inject(TodoRepositoryToken) private db: TodoRepository) {}
 
-  addTodo(item: Todo) {
-    return this.db.save(item)
+  addTodo(item: TodoCreateDto): Promise<TodoDetailDto> {
+    return this.db.create(item)
   }
 
-  getAll() {
+  findAll(): Promise<TodoListDto[]> {
     return this.db.findAll()
   }
 }

@@ -1,7 +1,9 @@
-import type { Todo } from '@/models/Todo'
+import type { TodoCreateDto } from '@/dtos/TodoCreateDto'
+import type { TodoDetailDto } from '@/dtos/TodoDetailDto'
+import type { TodoListDto } from '@/dtos/TodoListDto'
 
 export interface TodoRepository {
-  save(todo: Todo): Todo
+  create(dto: TodoCreateDto): Promise<TodoDetailDto>
   clear(): void
-  findAll(): Todo[]
+  findAll(): Promise<TodoListDto[]>
 }
