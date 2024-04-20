@@ -7,6 +7,7 @@ import { VTextField } from '@/components/VTextField'
 import { useTodo } from '@/composables/useTodo'
 import { formatDate } from '@/utils/Date'
 import { useSortable } from '@vueuse/integrations/useSortable'
+import dayjs from 'dayjs'
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import ProgressCounter from './ProgressCounter.vue'
@@ -84,7 +85,11 @@ useSortable(sortable, todoList, {
                 {{ `${t('common.looking-for')} "${inputSearch}"` }}
               </p>
               <ul ref="sortable" class="mt-5">
-                <li v-for="(todo, idx) in filtered" :key="todo.label" class="block handle-grip">
+                <li
+                  v-for="(todo, idx) in filtered"
+                  :key="todo.description"
+                  class="block handle-grip"
+                >
                   <VColumns align-items="center">
                     <VColumn grid-size="1">
                       <div class="is-flex is-flex-direction-column">
@@ -115,12 +120,16 @@ useSortable(sortable, todoList, {
                       <h3
                         data-testid="item-todo"
                         class="title is-5"
-                        :class="{ 'is-complete': todo.isComplete }"
+                        :class="{ 'is-complete': todo.is_complete }"
                       >
-                        {{ todo.label }}
+                        {{ todo.description }}
                       </h3>
                       <h5 class="subtitle is-7" data-testid="timestamp-todo">
-                        {{ t('common.published-date-text', { text: formatDate(todo.timestamp) }) }}
+                        {{
+                          t('common.published-date-text', {
+                            text: formatDate(dayjs(todo.timestamp))
+                          })
+                        }}
                       </h5>
                     </VColumn>
                     <VColumn grid-size="2">
@@ -140,7 +149,7 @@ useSortable(sortable, todoList, {
                           size="sm"
                           colors="danger"
                           data-testid="btn-delete"
-                          @click="deleteTodo(todo.label)"
+                          @click="deleteTodo(todo.description)"
                         >
                           <VIcon>
                             <i class="bi bi-trash"></i>

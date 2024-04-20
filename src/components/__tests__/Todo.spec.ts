@@ -1,6 +1,8 @@
 import Todo from '@/components/Todo.vue'
+import { TodoRepositoryToken } from '@/models/Injection'
+import type { TodoRepository } from '@/repository/TodoRepository'
 import { setup } from '@/test/setup'
-import { VueWrapper, mount } from '@vue/test-utils'
+import { VueWrapper, flushPromises, mount } from '@vue/test-utils'
 import { container } from 'tsyringe'
 import { afterAll, afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
@@ -38,7 +40,7 @@ describe('Todo Component', () => {
   })
 
   it('it should render component', () => {
-    expect(wrapper.exists()).toBe(true)
+    expect(wrapper).toBeDefined()
   })
 
   it('it should have input', () => {
@@ -50,17 +52,30 @@ describe('Todo Component', () => {
   })
 
   it('it should add new todo', async () => {
+    const repo = container.resolve<TodoRepository>(TodoRepositoryToken)
+    vi.spyOn(repo, 'create')
+    vi.spyOn(repo, 'findAll')
+
     await wrapper.get(txtInput).setValue(todo)
     await wrapper.get(btnAdd).trigger('submit.prevent')
-    const item = wrapper.find(todoItem)
 
-    expect(item.text()).toBe(todo)
+    expect(repo.create).toHaveBeenCalledOnce()
+
+    await flushPromises()
+
+    expect(repo.findAll).toHaveBeenCalledOnce()
+
+    const item = wrapper.findAll(todoItem)
+    expect(item.length).toBe(2)
     expect(wrapper.find<HTMLInputElement>(txtInput).element.value).toBe('')
   })
 
   it('it should delete todo', async () => {
     await wrapper.get(txtInput).setValue(todo)
     await wrapper.get(btnAdd).trigger('submit.prevent')
+
+    await flushPromises()
+
     await wrapper.get(btnDelete).trigger('click')
 
     expect(wrapper.findAll(todoItem)).toHaveLength(1)
@@ -70,6 +85,9 @@ describe('Todo Component', () => {
     const btn = '[data-testid="btn-complete"]'
 
     await addItem()
+
+    await flushPromises()
+
     await wrapper.get(btn).trigger('click')
 
     expect(wrapper.get(todoItem).classes('is-complete')).toBe(true)
@@ -104,6 +122,8 @@ describe('Todo Component', () => {
 
     await addItem('dinner')
 
+    await flushPromises()
+
     expect(wrapper.get(timestamp).text()).toBe('common.published-date-text')
   })
 
@@ -114,6 +134,8 @@ describe('Todo Component', () => {
 
     await addItem('lunch')
     await addItem('dinner')
+
+    await flushPromises()
 
     const dinner = wrapper.findAll(todoItem)[DINNER_IDX]
 

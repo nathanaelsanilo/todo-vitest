@@ -1,38 +1,56 @@
-import { Todo } from '@/models/Todo'
+import { TodoCreateDto } from '@/dtos/TodoCreateDto'
+import type { TodoListDto } from '@/dtos/TodoListDto'
+import { NotificationDataViewBuilder } from '@/models/NotificationDataView'
 import { TodoService } from '@/services/TodoService'
+import { useNotificationStore } from '@/stores/notification'
+import { formatTimestamp } from '@/utils/Date'
 import { resolver } from '@/utils/Resolver'
+import dayjs from 'dayjs'
 import { computed, reactive, ref, unref } from 'vue'
 
 export function useTodo() {
   const todoService = resolver(TodoService)
   const inputTodo = ref('')
-  const todoList = reactive<Todo[]>([])
+  const todoList = reactive<TodoListDto[]>([])
   const inputSearch = ref('')
+  const notificationStore = useNotificationStore()
 
-  function addTodo() {
-    const todo = new Todo()
-    todo.label = inputTodo.value
+  async function addTodo() {
+    const dto = new TodoCreateDto()
+    dto.setIsComplete(false)
+    dto.setTimestamp(formatTimestamp(dayjs()))
+    dto.setDescription(inputTodo.value)
 
-    todoService.addTodo(todo)
+    try {
+      await todoService.addTodo(dto)
 
-    getAll()
+      await getAll()
 
-    inputTodo.value = ''
+      inputTodo.value = ''
+
+      const dataView = NotificationDataViewBuilder.builder()
+        .content(`${dto.description} is added successfully`)
+        .title('Success')
+        .type('success')
+        .build()
+      notificationStore.render(dataView)
+    } catch (error) {
+      console.error(error)
+    }
   }
 
-  function getAll(): Todo[] {
-    const data = todoService.getAll()
+  async function getAll(): Promise<void> {
+    const data = await todoService.findAll()
     todoList.length = 0
     todoList.push(...data)
-    return data
   }
 
-  function complete(todo: Todo) {
-    todo.isComplete = !todo.isComplete
+  function complete(todo: TodoListDto) {
+    todo.is_complete = !todo.is_complete
   }
 
   function deleteTodo(todo: string) {
-    const filtered = [...todoList].filter((e) => e.label !== todo)
+    const filtered = [...todoList].filter((e) => e.description !== todo)
     todoList.length = 0
     todoList.push(...filtered)
   }
@@ -40,7 +58,7 @@ export function useTodo() {
   const filtered = computed(() => {
     return todoList.filter((todo) => {
       if (unref(inputSearch)) {
-        return todo.label.toUpperCase().includes(unref(inputSearch).toUpperCase())
+        return todo.description.toUpperCase().includes(unref(inputSearch).toUpperCase())
       }
 
       return todo
@@ -48,7 +66,7 @@ export function useTodo() {
   })
 
   const countCompleted = computed<number>(() => {
-    return todoList.filter((todo) => todo.isComplete).length
+    return todoList.filter((todo) => todo.is_complete).length
   })
 
   function increment(current: number) {
@@ -71,9 +89,11 @@ export function useTodo() {
   const progress = computed(() => {
     const total = todoList.length
     if (total === 0) return 0
-    const completeTask = todoList.filter((record) => record.isComplete).length
+    const completeTask = todoList.filter((record) => record.is_complete).length
     return Math.ceil((completeTask / total) * 100)
   })
+
+  getAll()
 
   return {
     decrement,

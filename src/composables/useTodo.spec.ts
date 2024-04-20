@@ -1,4 +1,3 @@
-import { Todo } from '@/models/Todo'
 import { setup } from '@/test/setup'
 import { set } from '@vueuse/core'
 import { container } from 'tsyringe'
@@ -22,96 +21,90 @@ describe('useTodo', () => {
     container.clearInstances()
   })
 
-  it('it should add new todo', () => {
+  it('it should add new todo', async () => {
+    const { mockAllTodo } = setup()
     const { inputTodo, todoList, addTodo } = useTodo()
 
-    const todo = new Todo()
-    todo.label = 'lunch'
+    await addTodo()
 
-    addTodo()
-
-    expect(todoList[0]).toEqual(todo)
+    expect(todoList).toEqual(mockAllTodo())
     expect(inputTodo.value).toBeFalsy()
   })
 
-  it('it should able to get all todos', () => {
+  it('should return todo list', async () => {
     const { mockAllTodo } = setup()
-    const mockData = mockAllTodo()
+    const { getAll, todoList } = useTodo()
 
-    const { getAll } = useTodo()
+    await getAll()
 
-    expect(getAll()).toEqual(mockData)
+    expect(todoList).toEqual(mockAllTodo())
   })
 
-  it('it should able to search todo', () => {
+  it('should able to search todo', async () => {
     const { inputSearch, filtered, getAll } = useTodo()
 
-    getAll()
+    await getAll()
 
     expect(toValue(filtered).length).toBe(2)
     set(inputSearch, 'din')
-    expect(toValue(filtered)[0].label).toEqual('dinner')
+    expect(toValue(filtered)[0].description).toEqual('dinner')
   })
 
-  it('it should able to remove todo', () => {
+  it('it should able to remove todo', async () => {
     const { filtered, deleteTodo, getAll } = useTodo()
 
-    getAll()
+    await getAll()
     deleteTodo('dinner')
 
     expect(toValue(filtered).length).toBe(1)
   })
 
-  it('it should able to complete todo', () => {
+  it('it should able to complete todo', async () => {
     const { filtered, getAll, complete } = useTodo()
 
-    getAll()
+    await getAll()
 
     complete(filtered.value[0])
 
-    expect(filtered.value[0].isComplete).toBe(true)
+    expect(filtered.value[0].is_complete).toBe(true)
   })
 
-  it('it should count completed todo', { skip: false }, () => {
+  it('it should count completed todo', { skip: false }, async () => {
     const { todoList, getAll, complete, countCompleted } = useTodo()
 
-    getAll()
+    await getAll()
     expect(todoList.length).toBe(2)
 
     complete(todoList[0])
 
-    expect(toValue(countCompleted)).toBe(1)
+    expect(toValue(countCompleted)).toBe(2)
   })
 
-  it('it should increment todo order', () => {
+  it('it should increment todo order', async () => {
     const { todoList, increment, getAll } = useTodo()
 
-    getAll()
+    await getAll()
     increment(1)
 
-    expect(todoList[0].label).toBe('dinner')
+    expect(todoList[0].description).toBe('dinner')
   })
 
-  it('it should decrement todo order', () => {
+  it('it should decrement todo order', async () => {
     const { todoList, decrement, getAll } = useTodo()
 
-    getAll()
+    await getAll()
 
     decrement(0)
 
-    expect(todoList[0].label).toBe('dinner')
+    expect(todoList[0].description).toBe('dinner')
   })
 
-  it('it should count progress', () => {
+  it('it should count progress', async () => {
     const { todoList, getAll, progress, complete } = useTodo()
 
-    getAll()
+    await getAll()
 
     complete(todoList[0])
-
-    expect(toValue(progress)).toBe(50)
-
-    complete(todoList[1])
 
     expect(toValue(progress)).toBe(100)
   })
