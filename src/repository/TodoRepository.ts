@@ -6,4 +6,6 @@ export interface TodoRepository {
   create(dto: TodoCreateDto): Promise<TodoDetailDto>
   clear(): void
   findAll(): Promise<TodoListDto[]>
+  delete(id: number): Promise<boolean>
+  complete(id: number): Promise<TodoDetailDto>
 }

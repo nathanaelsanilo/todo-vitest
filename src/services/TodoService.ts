@@ -19,4 +19,12 @@ export class TodoService {
   findAll(): Promise<TodoListDto[]> {
     return this.db.findAll()
   }
+
+  delete(id: number): Promise<boolean> {
+    return this.db.delete(id)
+  }
+
+  complete(id: number): Promise<TodoDetailDto> {
+    return this.db.complete(id)
+  }
 }

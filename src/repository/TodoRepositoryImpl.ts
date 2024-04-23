@@ -23,4 +23,12 @@ export class TodoRepositoryImpl implements TodoRepository {
   async findAll(): Promise<TodoListDto[]> {
     return http.get<TodoListDto[]>('api/v1/todos').then(({ data }) => data)
   }
+
+  async delete(id: number): Promise<boolean> {
+    return http.delete<boolean>(`api/v1/todos/${id}`).then(({ data }) => data)
+  }
+
+  async complete(id: number): Promise<TodoDetailDto> {
+    return http.patch<TodoDetailDto>(`api/v1/todos/${id}/complete`).then(({ data }) => data)
+  }
 }

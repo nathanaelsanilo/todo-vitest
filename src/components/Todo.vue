@@ -26,6 +26,7 @@ const {
   countCompleted,
   progress,
   inputSearch,
+  getAll,
   addTodo,
   deleteTodo,
   complete,
@@ -37,6 +38,8 @@ useSortable(sortable, todoList, {
   animation: 200,
   handle: '.handle-grip'
 })
+
+getAll()
 </script>
 
 <template>
@@ -85,11 +88,7 @@ useSortable(sortable, todoList, {
                 {{ `${t('common.looking-for')} "${inputSearch}"` }}
               </p>
               <ul ref="sortable" class="mt-5">
-                <li
-                  v-for="(todo, idx) in filtered"
-                  :key="todo.description"
-                  class="block handle-grip"
-                >
+                <li v-for="(todo, idx) in filtered" :key="todo.id" class="block handle-grip">
                   <VColumns align-items="center">
                     <VColumn grid-size="1">
                       <div class="is-flex is-flex-direction-column">
@@ -149,7 +148,7 @@ useSortable(sortable, todoList, {
                           size="sm"
                           colors="danger"
                           data-testid="btn-delete"
-                          @click="deleteTodo(todo.description)"
+                          @click="deleteTodo(todo)"
                         >
                           <VIcon>
                             <i class="bi bi-trash"></i>

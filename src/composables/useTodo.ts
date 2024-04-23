@@ -49,10 +49,17 @@ export function useTodo() {
     todo.is_complete = !todo.is_complete
   }
 
-  function deleteTodo(todo: string) {
-    const filtered = [...todoList].filter((e) => e.description !== todo)
-    todoList.length = 0
-    todoList.push(...filtered)
+  async function deleteTodo(todo: TodoListDto) {
+    await todoService.delete(todo.id)
+
+    const dataView = NotificationDataViewBuilder.builder()
+      .content(`${todo.description} is removed successfully`)
+      .title('Success')
+      .type('success')
+      .build()
+    notificationStore.render(dataView)
+
+    await getAll()
   }
 
   const filtered = computed(() => {
@@ -92,8 +99,6 @@ export function useTodo() {
     const completeTask = todoList.filter((record) => record.is_complete).length
     return Math.ceil((completeTask / total) * 100)
   })
-
-  getAll()
 
   return {
     decrement,
