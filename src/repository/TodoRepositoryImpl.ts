@@ -2,6 +2,7 @@ import type { TodoCreateDto } from '@/dtos/TodoCreateDto'
 import type { TodoDetailDto } from '@/dtos/TodoDetailDto'
 import type { TodoListDto } from '@/dtos/TodoListDto'
 import type { Todo } from '@/models/Todo'
+import type { TodoQueryParams } from '@/models/TodoQueryParams'
 import { http } from '@/modules/axios'
 import type { AxiosResponse } from 'axios'
 import type { TodoRepository } from './TodoRepository'
@@ -20,8 +21,12 @@ export class TodoRepositoryImpl implements TodoRepository {
     return this.rows
   }
 
-  async findAll(): Promise<TodoListDto[]> {
-    return http.get<TodoListDto[]>('api/v1/todos').then(({ data }) => data)
+  async findAll(params: TodoQueryParams): Promise<TodoListDto[]> {
+    return http
+      .get<TodoListDto[]>('api/v1/todos', {
+        params
+      })
+      .then(({ data }) => data)
   }
 
   async delete(id: number): Promise<boolean> {

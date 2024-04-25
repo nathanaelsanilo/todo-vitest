@@ -2,6 +2,7 @@ import type { TodoCreateDto } from '@/dtos/TodoCreateDto'
 import type { TodoDetailDto } from '@/dtos/TodoDetailDto'
 import type { TodoListDto } from '@/dtos/TodoListDto'
 import { TodoRepositoryToken } from '@/models/Injection'
+import type { TodoQueryParams } from '@/models/TodoQueryParams'
 import type { TodoRepository } from '@/repository/TodoRepository'
 import { inject, injectable } from 'tsyringe'
 
@@ -16,8 +17,8 @@ export class TodoService {
     return this.db.create(item)
   }
 
-  findAll(): Promise<TodoListDto[]> {
-    return this.db.findAll()
+  findAll(params?: TodoQueryParams): Promise<TodoListDto[]> {
+    return this.db.findAll(params)
   }
 
   delete(id: number): Promise<boolean> {

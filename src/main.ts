@@ -4,11 +4,12 @@ import '@abraham/reflection'
 
 import './container'
 
-import './assets/main.scss'
 import 'bootstrap-icons/font/bootstrap-icons.css'
+import './assets/main.scss'
 
-import { createApp } from 'vue'
+import { VueQueryPlugin } from '@tanstack/vue-query'
 import { createPinia } from 'pinia'
+import { createApp } from 'vue'
 import App from './App.vue'
 
 import { i18n } from '@/modules/i18n'
@@ -16,5 +17,16 @@ import { i18n } from '@/modules/i18n'
 const app = createApp(App)
 app.use(i18n)
 app.use(createPinia())
+app.use(VueQueryPlugin, {
+  queryClientConfig: {
+    defaultOptions: {
+      queries: {
+        retry: false,
+        refetchOnWindowFocus: false,
+        refetchInterval: false
+      }
+    }
+  }
+})
 
 app.mount('#app')
