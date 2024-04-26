@@ -1,52 +1,69 @@
 # vitest-todo
 
-This template should help get you started developing with Vue 3 in Vite.
+## Mocking Function and Module
 
-## Recommended IDE Setup
+### How to mock module
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+full example look [useTodo.test.ts](src/composables/__test__/useTodo.test.ts)
 
-## Type Support for `.vue` Imports in TS
+1. to mock module you can use `vi.mock('path/to/module', factory)`
+   where `factory` is a function that return all exported member from the module. if you dont provide the factory module, all exported member from the module will `undefined`. also you can use global mock module using `__mocks__` folder in the root folder or alongside the module
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+   ```js
+   vi.mock('@/modules/axios', () => {
+     return {
+       http: {
+         get: vi.fn().mockResolvedValue({ data: true })
+       }
+     }
+   })
+   ```
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+2. use `vi.mocked` to get the exported mock function from the module that have been mocked. test the exported mocked member using `vi.isMockFunction(fn)`
 
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+   ```js
+   expect(vi.isMockFunction(AxiosModule.http.get)).toBe(true)
+   ```
 
-## Customize configuration
+3. you can then override the mock function return value, or implementation
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+   ```js
+   vi.mocked(AxiosModule.http.get).mockImplementationOnce(() => {
+     return Promise.resolve({ data: mockAll })
+   })
+   ```
 
-## Project Setup
+### Mock Reset
 
-```sh
-pnpm install
+full example look [useManage.spec.ts](src/composables/__test__/useManage.spec.ts)
+
+After you mock the module, you can use `fn().mockReset()` to reset the inner implementation to `undefined`. If you intent to change the implementation you can use this and apply new implementation
+
+1. mock module using `vi.mock('path/to/module')` then add the exported member
+
+```js
+vi.mock('@/libs/useLib', () => ({
+  useLib: vi.fn(() => ({
+    plus: vi.fn(),
+    minus: vi.fn(),
+    clear: vi.fn()
+  }))
+}))
 ```
 
-### Compile and Hot-Reload for Development
+2. reset the mocked module using `.mockReset()`
 
-```sh
-pnpm dev
+```js
+const mocked = vi.mocked(useLib, { partial: true }).mockReset()
 ```
 
-### Type-Check, Compile and Minify for Production
+3. define exported member from the mocked module, since it will return undefined
 
-```sh
-pnpm build
-```
-
-### Run Unit Tests with [Vitest](https://vitest.dev/)
-
-```sh
-pnpm test:unit
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-pnpm lint
+```js
+const spy = vi.fn()
+mocked.mockImplementationOnce(() => ({
+  clear: vi.fn(),
+  minus: spy.mockReturnValueOnce('mocked'),
+  plus: vi.fn()
+}))
 ```
