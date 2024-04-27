@@ -22,24 +22,23 @@ const sortable = ref<HTMLElement | null>(null)
 const {
   inputTodo,
   todoList,
-  filtered,
   countCompleted,
   progress,
   inputSearch,
-  getAll,
   addTodo,
   deleteTodo,
   complete,
   increment,
-  decrement
+  decrement,
+  todoQuery
 } = useTodo()
+
+const { data, isLoading } = todoQuery
 
 useSortable(sortable, todoList, {
   animation: 200,
   handle: '.handle-grip'
 })
-
-getAll()
 </script>
 
 <template>
@@ -88,7 +87,10 @@ getAll()
                 {{ `${t('common.looking-for')} "${inputSearch}"` }}
               </p>
               <ul ref="sortable" class="mt-5">
-                <li v-for="(todo, idx) in filtered" :key="todo.id" class="block handle-grip">
+                <li v-if="isLoading" class="block is-skeleton">
+                  <span aria-hidden="true">loading</span>
+                </li>
+                <li v-for="(todo, idx) in data" v-else :key="todo.id" class="block handle-grip">
                   <VColumns align-items="center">
                     <VColumn grid-size="1">
                       <div class="is-flex is-flex-direction-column">

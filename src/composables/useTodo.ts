@@ -5,8 +5,10 @@ import { TodoService } from '@/services/TodoService'
 import { useNotificationStore } from '@/stores/notification'
 import { formatTimestamp } from '@/utils/Date'
 import { resolver } from '@/utils/Resolver'
+import { useQueryClient } from '@tanstack/vue-query'
 import dayjs from 'dayjs'
-import { computed, reactive, ref, unref } from 'vue'
+import { computed, reactive, ref } from 'vue'
+import { useTodoListQuery } from './useTodoListQuery'
 
 export function useTodo() {
   const todoService = resolver(TodoService)
@@ -14,6 +16,9 @@ export function useTodo() {
   const todoList = reactive<TodoListDto[]>([])
   const inputSearch = ref('')
   const notificationStore = useNotificationStore()
+  const queryClient = useQueryClient()
+
+  const todoQuery = useTodoListQuery()
 
   async function addTodo() {
     const dto = new TodoCreateDto()
@@ -24,7 +29,7 @@ export function useTodo() {
     try {
       await todoService.addTodo(dto)
 
-      await getAll()
+      queryClient.invalidateQueries({ queryKey: ['todo'] })
 
       inputTodo.value = ''
 
@@ -37,12 +42,6 @@ export function useTodo() {
     } catch (error) {
       console.error(error)
     }
-  }
-
-  async function getAll(): Promise<void> {
-    const data = await todoService.findAll()
-    todoList.length = 0
-    todoList.push(...data)
   }
 
   function complete(todo: TodoListDto) {
@@ -59,18 +58,8 @@ export function useTodo() {
       .build()
     notificationStore.render(dataView)
 
-    await getAll()
+    queryClient.invalidateQueries({ queryKey: ['todo'] })
   }
-
-  const filtered = computed(() => {
-    return todoList.filter((todo) => {
-      if (unref(inputSearch)) {
-        return todo.description.toUpperCase().includes(unref(inputSearch).toUpperCase())
-      }
-
-      return todo
-    })
-  })
 
   const countCompleted = computed<number>(() => {
     return todoList.filter((todo) => todo.is_complete).length
@@ -106,8 +95,7 @@ export function useTodo() {
     addTodo,
     complete,
     increment,
-    getAll,
-    filtered,
+    todoQuery,
     inputSearch,
     inputTodo,
     todoList,
