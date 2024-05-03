@@ -1,22 +1,10 @@
 <script lang="ts" setup>
 import { VProgress } from '@/components/VProgress'
-import type { TodoListDto } from '@/dtos/TodoListDto'
-import { computed } from 'vue'
+import { useTodoProgressQuery } from '@/composables/useTodoProgressQuery'
 import { useI18n } from 'vue-i18n'
 
-const props = withDefaults(
-  defineProps<{
-    completed: number
-    todos: TodoListDto[]
-    progress: number
-  }>(),
-  {
-    todos: (): TodoListDto[] => []
-  }
-)
-
 const { t } = useI18n()
-const todoTotal = computed(() => props.todos.length)
+const { data, isLoading } = useTodoProgressQuery()
 </script>
 
 <template>
@@ -25,12 +13,17 @@ const todoTotal = computed(() => props.todos.length)
       <div class="level-left">
         <label for="progress-todo">{{ t('common.progress') }}</label>
       </div>
-      <div class="level-right">
+      <div class="level-right" :class="{ 'is-skeleton': isLoading }">
         <label for="" data-testid="progress-todo-label">
-          {{ `${props.completed}/${todoTotal}` }}
+          {{ `${data?.completed}/${data?.total}` }}
         </label>
       </div>
     </div>
-    <VProgress id="progress-todo" :value="progress" data-testid="progress-todo" />
+    <VProgress
+      id="progress-todo"
+      :loading="isLoading"
+      :value="data?.progress"
+      data-testid="progress-todo"
+    />
   </div>
 </template>

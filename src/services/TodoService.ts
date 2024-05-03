@@ -1,3 +1,4 @@
+import type { TodoCountCompletedDto } from '@/dtos/TodoCountCompletedDto'
 import type { TodoCreateDto } from '@/dtos/TodoCreateDto'
 import type { TodoDetailDto } from '@/dtos/TodoDetailDto'
 import type { TodoListDto } from '@/dtos/TodoListDto'
@@ -27,5 +28,9 @@ export class TodoService {
 
   complete(id: number): Promise<TodoDetailDto> {
     return this.db.complete(id)
+  }
+
+  countCompleted(): Promise<TodoCountCompletedDto> {
+    return this.db.countCompleted()
   }
 }
