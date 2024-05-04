@@ -1,12 +1,26 @@
+import { TodoCountCompletedDto } from '@/dtos/TodoCountCompletedDto'
+import { TodoRepositoryToken } from '@/models/Injection'
 import { mount, type VueWrapper } from '@vue/test-utils'
 import { useDateFormat, useNow } from '@vueuse/core'
-import { beforeEach, describe, expect, it } from 'vitest'
+import { container } from 'tsyringe'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import ProgressCounter from '../ProgressCounter.vue'
 
 describe('ProgressCounter Component', () => {
   let wrapper: VueWrapper<InstanceType<typeof ProgressCounter>>
 
+  const mockDto = new TodoCountCompletedDto()
+  mockDto.completed = 1
+  mockDto.progress = 50
+  mockDto.total = 2
+
   beforeEach(() => {
+    container.register(TodoRepositoryToken, {
+      useValue: {
+        countCompleted: vi.fn().mockResolvedValue(mockDto)
+      }
+    })
+
     wrapper = mount(ProgressCounter, {
       props: {
         completed: 1,
@@ -29,7 +43,7 @@ describe('ProgressCounter Component', () => {
 
   it('it should show total todo', () => {
     const todoLabel = '[data-testid="progress-todo-label"]'
-    const display = '1/1'
+    const display = '1/2'
     expect(wrapper.get(todoLabel).text()).toBe(display)
   })
 })
