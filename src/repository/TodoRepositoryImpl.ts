@@ -2,6 +2,7 @@ import type { TodoCountCompletedDto } from '@/dtos/TodoCountCompletedDto'
 import type { TodoCreateDto } from '@/dtos/TodoCreateDto'
 import type { TodoDetailDto } from '@/dtos/TodoDetailDto'
 import type { TodoListDto } from '@/dtos/TodoListDto'
+import type { TodoReorderDto } from '@/dtos/TodoReorderDto'
 import type { Todo } from '@/models/Todo'
 import type { TodoQueryParams } from '@/models/TodoQueryParams'
 import { http } from '@/modules/axios'
@@ -40,5 +41,9 @@ export class TodoRepositoryImpl implements TodoRepository {
 
   async countCompleted(): Promise<TodoCountCompletedDto> {
     return http.get<TodoCountCompletedDto>(`api/v1/todos/completed`).then(({ data }) => data)
+  }
+
+  async reorder(dto: TodoReorderDto): Promise<TodoListDto[]> {
+    return http.patch<TodoListDto[]>(`api/v1/todos/reorder`, dto).then(({ data }) => data)
   }
 }

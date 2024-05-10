@@ -3,4 +3,5 @@ export class TodoListDto {
   description!: string
   timestamp!: string
   is_complete!: boolean
+  order_key!: number
 }

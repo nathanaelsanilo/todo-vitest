@@ -2,6 +2,7 @@ import type { TodoCountCompletedDto } from '@/dtos/TodoCountCompletedDto'
 import type { TodoCreateDto } from '@/dtos/TodoCreateDto'
 import type { TodoDetailDto } from '@/dtos/TodoDetailDto'
 import type { TodoListDto } from '@/dtos/TodoListDto'
+import type { TodoReorderDto } from '@/dtos/TodoReorderDto'
 import { TodoRepositoryToken } from '@/models/Injection'
 import type { TodoQueryParams } from '@/models/TodoQueryParams'
 import type { TodoRepository } from '@/repository/TodoRepository'
@@ -32,5 +33,9 @@ export class TodoService {
 
   countCompleted(): Promise<TodoCountCompletedDto> {
     return this.db.countCompleted()
+  }
+
+  reorder(dto: TodoReorderDto): Promise<TodoListDto[]> {
+    return this.db.reorder(dto)
   }
 }

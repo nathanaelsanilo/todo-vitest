@@ -5,7 +5,7 @@ export class TodoQueryParams {
     this.name = undefined
   }
 
-  setName(value: string): this {
+  setName(value: string | undefined): this {
     this.name = value
     return this
   }
