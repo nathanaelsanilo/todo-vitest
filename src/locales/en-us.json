@@ -5,6 +5,7 @@
   "common": {
     "complete": "Complete",
     "input-text": "Input {text}",
+    "loading": "Loading",
     "looking-for": "Looking for ",
     "new-text": "New {text}",
     "progress": "Progress",

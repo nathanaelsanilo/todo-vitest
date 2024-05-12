@@ -5,6 +5,7 @@
   "common": {
     "complete": "Selesai",
     "input-text": "Masukan {text}",
+    "loading": "Loading",
     "looking-for": "Melakukan pencarian ",
     "new-text": "{text} Baru",
     "progress": "Proses",
