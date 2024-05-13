@@ -1,10 +1,9 @@
-import { describe, expect, it, vi } from 'vitest'
-import { useTodoCreate } from '../useTodoCreate'
-import { useTodoCreateMutation } from '../useTodoCreateMutation'
-import { container } from 'tsyringe'
 import { TodoRepositoryToken } from '@/models/Injection'
-import { defineComponent } from 'vue'
 import { flushPromises, mount } from '@vue/test-utils'
+import { container } from 'tsyringe'
+import { describe, expect, it, vi } from 'vitest'
+import { defineComponent } from 'vue'
+import { useTodoCreate } from '../useTodoCreate'
 
 describe('useTodoCreate', () => {
   it('should create', async () => {

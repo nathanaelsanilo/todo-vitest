@@ -4,7 +4,7 @@
 
 ### How to mock module
 
-full example look [useTodo.test.ts](src/composables/__test__/useTodo.test.ts)
+full example look [useTodo.test.ts](src/composables/__test__/useTodo.spec.ts)
 
 1. to mock module you can use `vi.mock('path/to/module', factory)`
    where `factory` is a function that return all exported member from the module. if you dont provide the factory module, all exported member from the module will `undefined`. also you can use global mock module using `__mocks__` folder in the root folder or alongside the module

@@ -1,9 +1,9 @@
+import { TodoRepositoryToken } from '@/models/Injection'
+import { mount } from '@vue/test-utils'
+import { container } from 'tsyringe'
 import { describe, expect, it, vi } from 'vitest'
 import { defineComponent } from 'vue'
 import { useTodoDeleteMutation } from '../useTodoDeleteMutation'
-import { mount } from '@vue/test-utils'
-import { container } from 'tsyringe'
-import { TodoRepositoryToken } from '@/models/Injection'
 
 describe('useTodoDeleteMutation', () => {
   it('should call service', async () => {

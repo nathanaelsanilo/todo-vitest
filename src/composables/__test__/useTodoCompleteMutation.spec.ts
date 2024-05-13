@@ -1,9 +1,9 @@
+import { TodoRepositoryToken } from '@/models/Injection'
+import { flushPromises, mount } from '@vue/test-utils'
+import { container } from 'tsyringe'
 import { describe, expect, it, vi } from 'vitest'
 import { defineComponent } from 'vue'
 import { useTodoCompleteMutation } from '../useTodoCompleteMutation'
-import { flushPromises, mount } from '@vue/test-utils'
-import { container } from 'tsyringe'
-import { TodoRepositoryToken } from '@/models/Injection'
 
 describe('useTodoCompleteMutation', () => {
   const MockComponent = defineComponent({
