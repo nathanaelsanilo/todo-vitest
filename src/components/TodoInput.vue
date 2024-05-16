@@ -13,7 +13,7 @@ const state = reactive({
 })
 const queryClient = useQueryClient()
 
-const { create } = useTodoCreate({
+const { create, isLoading } = useTodoCreate({
   onSuccess: () => {
     queryClient.invalidateQueries({ queryKey: ['todo', 'list'] })
   }
@@ -36,7 +36,7 @@ const addTodo = () => {
         />
         <div class="field">
           <div class="control">
-            <VButton type="submit" colors="primary" data-testid="btn-add">
+            <VButton type="submit" colors="primary" data-testid="btn-add" :loading="isLoading">
               {{ t('common.save') }}
             </VButton>
           </div>

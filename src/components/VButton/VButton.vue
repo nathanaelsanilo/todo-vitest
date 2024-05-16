@@ -9,7 +9,8 @@ const classes = computed(() => ({
   'is-danger': props.colors === 'danger',
   'is-small': props.size === 'sm',
   'is-white': props.colors === 'white',
-  'is-success': props.colors === 'success'
+  'is-success': props.colors === 'success',
+  'is-skeleton': props.loading
 }))
 </script>
 

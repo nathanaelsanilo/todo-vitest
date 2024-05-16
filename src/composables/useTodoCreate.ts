@@ -6,7 +6,7 @@ import dayjs from 'dayjs'
 import { useTodoCreateMutation } from './useTodoCreateMutation'
 
 export function useTodoCreate(conf?: MutationOptions<TodoDetailDto, unknown, TodoCreateDto>) {
-  const { mutate } = useTodoCreateMutation(conf)
+  const { mutate, isPending } = useTodoCreateMutation(conf)
 
   const create = (state: { todo: string }) => {
     const dto = new TodoCreateDto()
@@ -17,5 +17,5 @@ export function useTodoCreate(conf?: MutationOptions<TodoDetailDto, unknown, Tod
     mutate(dto)
   }
 
-  return { create }
+  return { create, isLoading: isPending }
 }
