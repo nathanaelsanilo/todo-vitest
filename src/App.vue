@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import Todo from '@/components/Todo.vue'
 import { VNotification } from '@/components/VNotification'
+import Navbar from '@/components/Navbar.vue'
 import { useNotificationStore } from '@/stores/notification'
 import { computed } from 'vue'
 import type { INotificationDataView } from './models/NotificationDataView'
@@ -17,8 +17,11 @@ const notificationParams = computed<INotificationDataView>(() => ({
   <Teleport to="#notification">
     <VNotification v-if="notificationStore.isShow" :params="notificationParams" />
   </Teleport>
+  <Teleport to="#header">
+    <Navbar />
+  </Teleport>
   <main>
-    <Todo />
+    <RouterView></RouterView>
   </main>
 </template>
 
