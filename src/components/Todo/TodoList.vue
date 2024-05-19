@@ -7,7 +7,7 @@ import { useSortable } from '@vueuse/integrations/useSortable'
 import { reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import TodoListItem from './TodoListItem.vue'
-import { VTextField } from './VTextField'
+import { VTextField } from '../VTextField'
 
 const { t } = useI18n()
 const params = reactive(new TodoQueryParams())

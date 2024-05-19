@@ -1,13 +1,13 @@
 <script lang="ts" setup>
+import ProgressCounter from '@/components/Todo/ProgressCounter.vue'
+import TodoInput from '@/components/Todo/TodoInput.vue'
+import TodoList from '@/components/Todo/TodoList.vue'
 import { VCard } from '@/components/VCard'
 import { VColumn, VColumns } from '@/components/VColumns'
 import { useI18n } from 'vue-i18n'
-import ProgressCounter from './ProgressCounter.vue'
-import TodoInput from './TodoInput.vue'
-import TodoList from './TodoList.vue'
 
 defineOptions({
-  name: 'TodoVue'
+  name: 'TodoPage'
 })
 
 const { t } = useI18n()

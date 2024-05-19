@@ -1,10 +1,10 @@
-import Todo from '@/components/Todo.vue'
 import { TodoCountCompletedDto } from '@/dtos/TodoCountCompletedDto'
 import { TodoListDto } from '@/dtos/TodoListDto'
 import { TodoRepositoryToken } from '@/models/Injection'
 import { VueWrapper, mount } from '@vue/test-utils'
 import { container } from 'tsyringe'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
+import Todo from '../Todo.vue'
 
 const mockTodoCountCompletedDto = new TodoCountCompletedDto()
 const mockAll = [new TodoListDto()]

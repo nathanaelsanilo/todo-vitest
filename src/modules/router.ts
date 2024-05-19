@@ -1,17 +1,17 @@
-import BubbleSort from '@/components/BubbleSort.vue'
-import Todo from '@/components/Todo.vue'
-import { createRouter, createWebHistory } from 'vue-router'
+import SortsPage from '@/pages/Sorts.vue'
+import TodoPage from '@/pages/Todo.vue'
+import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
 
-const routes = [
+const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    name: 'bubble-sort',
-    component: BubbleSort
+    name: 'root',
+    component: SortsPage
   },
   {
     path: '/todo',
     name: 'todo',
-    component: Todo
+    component: TodoPage
   }
 ]
 

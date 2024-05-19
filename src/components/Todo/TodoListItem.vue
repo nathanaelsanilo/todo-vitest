@@ -1,4 +1,7 @@
 <script lang="ts" setup>
+import { VButton } from '@/components/VButton'
+import { VColumn, VColumns } from '@/components/VColumns'
+import { VIcon } from '@/components/VIcon'
 import { useTodoCompleteMutation } from '@/composables/useTodoCompleteMutation'
 import { useTodoDeleteMutation } from '@/composables/useTodoDeleteMutation'
 import { useTodoReorderMutation } from '@/composables/useTodoReorderMutation'
@@ -11,9 +14,6 @@ import { formatDate } from '@/utils/Date'
 import { useQueryClient } from '@tanstack/vue-query'
 import dayjs from 'dayjs'
 import { useI18n } from 'vue-i18n'
-import { VButton } from './VButton'
-import { VColumn, VColumns } from './VColumns'
-import { VIcon } from './VIcon'
 
 defineProps<{
   todo: TodoListDto
