@@ -1,17 +1,24 @@
-<script lang="ts" setup>
+<script lang="ts" setup generic="TData extends { value: number; selected: boolean }">
+import { VBar, VBarItem } from '@/components/VBar'
 import { VButton } from '@/components/VButton'
 import { VHeading } from '@/components/VHeading'
 import { VRange } from '@/components/VRange'
-import Fifty from '@/json/fifty.json'
-import { ref } from 'vue'
 import { wait } from '@/utils/Wait'
+import { reactive } from 'vue'
+import { useI18n } from 'vue-i18n'
 
-const arr = ref([...Fifty])
-const isSorting = ref(false)
-const speed = ref(100)
+const props = defineProps<{
+  data: TData[]
+}>()
+const emits = defineEmits(['reset'])
+const { t } = useI18n()
+const state = reactive({
+  isSorting: false,
+  speed: 100
+})
 
-const bubbleSort = async (arr: typeof Fifty) => {
-  isSorting.value = true
+const bubbleSort = async (arr: TData[]) => {
+  state.isSorting = true
   const n = arr.length
 
   for (let i = 1; i < n - 1; i++) {
@@ -27,66 +34,47 @@ const bubbleSort = async (arr: typeof Fifty) => {
         arr[j] = next
       }
 
-      await wait(speed.value)
+      await wait(state.speed)
 
       current.selected = false
       next.selected = false
     }
   }
 
-  isSorting.value = false
+  state.isSorting = false
 }
 
 const doSort = () => {
-  bubbleSort(arr.value)
+  bubbleSort(props.data)
 }
 
 const doReset = () => {
-  arr.value.length = 0
-  arr.value = [...Fifty]
+  emits('reset')
 }
 </script>
 
 <template>
-  <VHeading title="Bubble Sort">
+  <VHeading :title="t('common.bubble-sort')">
     <template #action>
-      <VRange v-model="speed" label="Speed" />
+      <VRange v-model="state.speed" :label="t('common.speed')" name="speed" />
       <div class="field is-grouped ml-4">
         <div class="control">
-          <VButton class="" colors="primary" @click="doSort">Sort</VButton>
+          <VButton colors="primary" testid="btn-sort" :disabled="state.isSorting" @click="doSort">
+            {{ t('common.sort') }}
+          </VButton>
         </div>
         <div class="control">
-          <VButton class="" @click="doReset">Reset</VButton>
+          <VButton testid="btn-reset" :disabled="state.isSorting" @click="doReset">
+            {{ t('common.reset') }}
+          </VButton>
         </div>
       </div>
     </template>
   </VHeading>
 
-  <div class="bar">
-    <div
-      v-for="item in arr"
-      :key="item.value"
-      class="bar__item"
-      :style="{ height: `${item.value}px` }"
-      :class="{ 'bar__item--selected': item.selected }"
-    ></div>
-  </div>
+  <VBar :data="data">
+    <template #bar="{ bar }">
+      <VBarItem data-testid="bar-item" :value="bar.value" :selected="bar.selected" />
+    </template>
+  </VBar>
 </template>
-
-<style lang="scss" scoped>
-.bar {
-  display: flex;
-  align-items: baseline;
-  gap: 2px;
-
-  &__item {
-    flex: 1;
-    width: 10px;
-    background-color: var(--bulma-text-30);
-
-    &--selected {
-      background-color: var(--bulma-primary);
-    }
-  }
-}
-</style>

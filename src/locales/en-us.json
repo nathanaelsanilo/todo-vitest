@@ -1,8 +1,6 @@
 {
-  "title": {
-    "todo-app": "Todo App"
-  },
   "common": {
+    "bubble-sort": "Bubble Sort",
     "complete": "Complete",
     "input-text": "Input {text}",
     "loading": "Loading",
@@ -10,8 +8,14 @@
     "new-text": "New {text}",
     "progress": "Progress",
     "published-date-text": "Published date {text}",
+    "reset": "Reset",
     "save": "Save",
     "search": "Search",
+    "sort": "Sort",
+    "speed": "Speed",
     "todo": "Todo"
+  },
+  "title": {
+    "todo-app": "Todo App"
   }
 }

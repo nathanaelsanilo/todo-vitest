@@ -1,8 +1,6 @@
 {
-  "title": {
-    "todo-app": "Todo App"
-  },
   "common": {
+    "bubble-sort": "Bubble Sort",
     "complete": "Selesai",
     "input-text": "Masukan {text}",
     "loading": "Loading",
@@ -10,8 +8,14 @@
     "new-text": "{text} Baru",
     "progress": "Proses",
     "published-date-text": "Tanggal publish {text}",
+    "reset": "Atur ulang",
     "save": "Simpan",
     "search": "Cari",
+    "sort": "Urutkan",
+    "speed": "Kecepatan",
     "todo": "Todo"
+  },
+  "title": {
+    "todo-app": "Todo App"
   }
 }
