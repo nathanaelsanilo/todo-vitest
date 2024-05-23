@@ -1,14 +1,14 @@
 <script lang="ts" setup>
 import type { BarItemProps } from './types.ts'
 
-const props = defineProps<BarItemProps>()
+defineProps<BarItemProps>()
 </script>
 
 <template>
   <div
     class="bar__item"
     :style="{ height: `${value}px` }"
-    :class="{ 'bar__item--selected': selected }"
+    :class="{ 'bar__item--selected': selected, 'bar__item--lowest': lowest }"
   ></div>
 </template>
 
@@ -20,6 +20,10 @@ const props = defineProps<BarItemProps>()
 
   &--selected {
     background-color: var(--bulma-primary);
+  }
+
+  &--lowest {
+    background-color: var(--bulma-danger);
   }
 }
 </style>

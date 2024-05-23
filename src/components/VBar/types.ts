@@ -5,5 +5,5 @@ export type Props<TData extends Record<string, any>> = {
 export type BarItemProps = {
   value: number
   selected: boolean
-  [key: string]: any
+  lowest?: boolean
 }

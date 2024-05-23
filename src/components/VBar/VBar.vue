@@ -20,8 +20,9 @@ const { data } = toRefs(props)
 
 <style lang="scss" scoped>
 .bar {
+  min-height: 200px;
   display: flex;
-  align-items: baseline;
+  align-items: end;
   gap: 2px;
 }
 </style>
