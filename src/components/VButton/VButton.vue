@@ -2,7 +2,9 @@
 import { computed } from 'vue'
 import type { Props } from './types'
 
-const props = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  testid: 'vbutton'
+})
 const classes = computed(() => ({
   button: true,
   'is-primary': props.colors === 'primary',
@@ -15,7 +17,7 @@ const classes = computed(() => ({
 </script>
 
 <template>
-  <button data-testid="vbutton" :class="classes">
+  <button :data-testid="testid" :class="classes">
     <slot>{{ label }}</slot>
   </button>
 </template>

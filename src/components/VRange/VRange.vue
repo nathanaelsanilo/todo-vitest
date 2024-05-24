@@ -5,17 +5,27 @@ withDefaults(defineProps<Props>(), {
   label: '',
   max: 500,
   min: 0,
-  step: 100
+  step: 100,
+  testid: 'vrange'
 })
 
-const model = defineModel()
+const model = defineModel<number>()
 </script>
 
 <template>
   <div class="field">
-    <label v-if="!!label" for="" class="label">{{ label }} {{ modelValue }}</label>
+    <label v-if="!!label" :for="name" class="label">{{ label }} {{ modelValue }}</label>
     <div class="control">
-      <input id="" v-model="model" type="range" name="" :max="max" :min="min" :step="step" />
+      <input
+        :id="name"
+        v-model.number="model"
+        type="range"
+        :name="name"
+        :max="max"
+        :min="min"
+        :step="step"
+        :data-testid="testid"
+      />
     </div>
   </div>
 </template>

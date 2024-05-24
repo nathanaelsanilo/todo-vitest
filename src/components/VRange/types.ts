@@ -3,4 +3,6 @@ export type Props = {
   max?: number
   min?: number
   step?: number
+  name: string
+  testid?: string
 }

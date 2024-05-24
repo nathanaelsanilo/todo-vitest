@@ -3,4 +3,5 @@ export type Props = Partial<{
   colors: 'primary' | 'danger' | 'white' | 'success'
   size: 'sm' | 'default'
   loading: boolean
+  testid: string
 }>
