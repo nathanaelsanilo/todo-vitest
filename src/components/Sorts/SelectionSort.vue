@@ -1,18 +1,35 @@
-<script lang="ts" setup data-testid="selectionsort">
-import { VBar } from '@/components/VBar'
+<script
+  lang="ts"
+  setup
+  generic="TData extends { value: number; selected: boolean; lowest: boolean }"
+>
+import { VBar, VBarItem } from '@/components/VBar'
 import { VButton } from '@/components/VButton'
 import { VHeading } from '@/components/VHeading'
-import twenty from '@/json/twenty.json'
-import { wait } from '@/utils/Wait'
-import { ref } from 'vue'
 import { VRange } from '@/components/VRange'
+import { wait } from '@/utils/Wait'
+import { useToggle } from '@vueuse/core'
+import { reactive } from 'vue'
+import { useI18n } from 'vue-i18n'
 
-type Data = typeof twenty
+type Props = {
+  data: TData[]
+}
+const props = withDefaults(defineProps<Props>(), {
+  data: () => []
+})
+const emits = defineEmits<{
+  (e: 'reset'): void
+}>()
+const { t } = useI18n()
+const state = reactive({
+  speed: 100
+})
+const [loading, toggle] = useToggle(false)
 
-const data = ref([...twenty])
-const speed = ref(100)
+const selectionSort = async (arr: TData[]) => {
+  toggle()
 
-const selectionSort = async (arr: Data) => {
   const n = arr.length
 
   for (let i = 0; i < n - 1; i++) {
@@ -32,11 +49,11 @@ const selectionSort = async (arr: Data) => {
         // save new minimum value from the unsorted sub array
         minIndex = j
 
-        arr[minIndex].iteration = true
-        arr[prevMinIndex].iteration = false
+        arr[minIndex].lowest = true
+        arr[prevMinIndex].lowest = false
       }
 
-      await wait(speed.value)
+      await wait(state.speed)
 
       current.selected = false
     }
@@ -46,61 +63,47 @@ const selectionSort = async (arr: Data) => {
     arr[minIndex] = arr[i]
     arr[i] = temp
 
-    arr[minIndex].iteration = false
+    arr[minIndex].lowest = false
     arr[minIndex].selected = false
     arr[i].selected = false
-    arr[i].iteration = false
+    arr[i].lowest = false
   }
+
+  toggle()
 }
 
 const doSort = () => {
-  selectionSort(data.value)
-}
-
-const doReset = () => {
-  data.value.length = 0
-  data.value = [...twenty]
+  selectionSort(props.data)
 }
 </script>
 
 <template>
-  <VHeading title="Selection Sort">
+  <VHeading :title="t('common.selection-sort')">
     <template #action>
-      <VRange v-model="speed" label="Speed" />
+      <VRange v-model="state.speed" testid="range-speed" :label="t('common.speed')" name="speed" />
       <div class="field is-grouped ml-4">
         <div class="control">
-          <VButton class="" colors="primary" @click="doSort">Sort</VButton>
+          <VButton testid="btn-sort" colors="primary" :disabled="loading" @click="doSort">
+            {{ t('common.sort') }}
+          </VButton>
         </div>
         <div class="control">
-          <VButton class="" @click="doReset">Reset</VButton>
+          <VButton testid="btn-reset" :disabled="loading" @click="emits('reset')">
+            {{ t('common.reset') }}
+          </VButton>
         </div>
       </div>
     </template>
   </VHeading>
 
-  <VBar :data="data" class="">
+  <VBar :data="data">
     <template #bar="{ bar }">
-      <div
-        class="item"
-        :style="{ height: `${bar.value}px` }"
-        :class="{ 'item--selected': bar.selected, 'item--iteration': bar.iteration }"
-      ></div>
+      <VBarItem
+        :lowest="bar.lowest"
+        data-testid="bar-item"
+        :selected="bar.selected"
+        :value="bar.value"
+      />
     </template>
   </VBar>
 </template>
-
-<style lang="scss" scoped>
-.item {
-  flex: 1;
-  width: 10px;
-  background-color: var(--bulma-text-30);
-
-  &--iteration {
-    background-color: var(--bulma-danger);
-  }
-
-  &--selected {
-    background-color: var(--bulma-primary);
-  }
-}
-</style>

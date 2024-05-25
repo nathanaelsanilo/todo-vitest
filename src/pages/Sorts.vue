@@ -2,13 +2,16 @@
 import BubbleSort from '@/components/Sorts/BubbleSort.vue'
 import SelectionSort from '@/components/Sorts/SelectionSort.vue'
 import FiftyJson from '@/json/fifty.json'
+import TwentyJson from '@/json/twenty.json'
 import { ref } from 'vue'
 
 defineOptions({
   name: 'SortsPage'
 })
 const fifty = () => [...FiftyJson]
+const twenty = () => [...TwentyJson]
 const bubbleSortData = ref(fifty())
+const selectionSortData = ref(twenty())
 </script>
 
 <template>
@@ -17,7 +20,7 @@ const bubbleSortData = ref(fifty())
       <BubbleSort :data="bubbleSortData" @reset="bubbleSortData = fifty()" />
     </div>
     <div class="container is-max-desktop mt-6">
-      <SelectionSort />
+      <SelectionSort :data="selectionSortData" @reset="selectionSortData = twenty()" />
     </div>
   </div>
 </template>
