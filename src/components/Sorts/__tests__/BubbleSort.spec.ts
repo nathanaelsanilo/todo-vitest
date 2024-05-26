@@ -1,8 +1,12 @@
 import { flushPromises, mount } from '@vue/test-utils'
-import { describe, expect, it, vi } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import BubbleSort from '../BubbleSort.vue'
 
 describe('BubbleSort.vue', () => {
+  beforeEach(() => {
+    vi.useFakeTimers()
+  })
+
   it('should sort', async () => {
     const wrapper = mount(BubbleSort, {
       props: {
@@ -19,21 +23,18 @@ describe('BubbleSort.vue', () => {
         ]
       }
     })
-    vi.useFakeTimers()
 
     const barItem = '[data-testid="bar-item"]'
     const btnSort = '[data-testid="btn-sort"]'
 
     await wrapper.get(btnSort).trigger('click')
-    vi.runAllTimers()
+    await vi.runAllTimersAsync()
 
     await flushPromises()
 
-    const items = wrapper.findAll(barItem)
+    const items = wrapper.findAll(barItem).map((e) => e.getCurrentComponent()?.props.value)
 
     expect(items).toHaveLength(3)
-
-    const bars = items.map((bar) => <`height: ${number}px;`>bar.attributes('style'))
-    expect(bars).toEqual(['height: 1px;', 'height: 2px;', 'height: 3px;'])
+    expect(items).toEqual([1, 2, 3])
   })
 })
