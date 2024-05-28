@@ -3,6 +3,7 @@
     "bubble-sort": "Bubble Sort",
     "complete": "Complete",
     "input-text": "Input {text}",
+    "insertion-sort": "Insertion Sort",
     "loading": "Loading",
     "looking-for": "Looking for ",
     "new-text": "New {text}",
