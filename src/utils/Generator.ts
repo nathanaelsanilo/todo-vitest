@@ -1,5 +1,12 @@
+type GeneratorParams = {
+  length?: number
+  max?: number
+}
+
 export class Generator {
-  static randNumber(): number[] {
-    return Array.from({ length: 40 }, () => Math.floor(Math.random() * 200))
+  static randNumber(params?: GeneratorParams): number[] {
+    return Array.from({ length: params?.length ?? 40 }, () =>
+      Math.floor(Math.random() * (params?.max ?? 200))
+    )
   }
 }
