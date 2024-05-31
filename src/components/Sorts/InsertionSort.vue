@@ -4,7 +4,7 @@ import { VButton } from '@/components/VButton'
 import { VHeading } from '@/components/VHeading'
 import { VRange } from '@/components/VRange'
 import { wait } from '@/utils/Wait'
-import { reactive } from 'vue'
+import { reactive, toRefs, unref } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 const props = withDefaults(
@@ -18,6 +18,7 @@ const props = withDefaults(
 const emits = defineEmits<{
   reset: []
 }>()
+const { data } = toRefs(props)
 const { t } = useI18n()
 const state = reactive({
   speed: 100,
@@ -46,7 +47,7 @@ const insertionSort = async (arr: TData[]) => {
 }
 
 const doSort = () => {
-  insertionSort(props.data)
+  insertionSort(unref(data))
 }
 
 const doReset = () => {

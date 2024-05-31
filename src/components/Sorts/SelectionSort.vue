@@ -9,7 +9,7 @@ import { VHeading } from '@/components/VHeading'
 import { VRange } from '@/components/VRange'
 import { wait } from '@/utils/Wait'
 import { useToggle } from '@vueuse/core'
-import { reactive } from 'vue'
+import { reactive, toRefs, unref } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 type Props = {
@@ -21,6 +21,7 @@ const props = withDefaults(defineProps<Props>(), {
 const emits = defineEmits<{
   (e: 'reset'): void
 }>()
+const { data } = toRefs(props)
 const { t } = useI18n()
 const state = reactive({
   speed: 100
@@ -73,7 +74,7 @@ const selectionSort = async (arr: TData[]) => {
 }
 
 const doSort = () => {
-  selectionSort(props.data)
+  selectionSort(unref(data))
 }
 </script>
 

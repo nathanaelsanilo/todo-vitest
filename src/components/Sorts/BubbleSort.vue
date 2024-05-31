@@ -4,13 +4,14 @@ import { VButton } from '@/components/VButton'
 import { VHeading } from '@/components/VHeading'
 import { VRange } from '@/components/VRange'
 import { wait } from '@/utils/Wait'
-import { reactive } from 'vue'
+import { reactive, toRefs, unref } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 const props = defineProps<{
   data: TData[]
 }>()
 const emits = defineEmits(['reset'])
+const { data } = toRefs(props)
 const { t } = useI18n()
 const state = reactive({
   isSorting: false,
@@ -45,7 +46,7 @@ const bubbleSort = async (arr: TData[]) => {
 }
 
 const doSort = () => {
-  bubbleSort(props.data)
+  bubbleSort(unref(data))
 }
 
 const doReset = () => {
