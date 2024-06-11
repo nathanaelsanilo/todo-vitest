@@ -1,12 +1,21 @@
 <script lang="ts" setup>
-import { useAttrs } from 'vue'
+import { VControl } from '@/components/VControl'
+import { useField } from 'vee-validate'
+import { toRefs, useAttrs } from 'vue'
 import type { Props } from './types'
+
 defineOptions({
   inheritAttrs: false
 })
 const props = defineProps<Props>()
-const model = defineModel<string>('modelValue')
+
+defineModel<string>('modelValue')
+
+const { name, id, type, label } = toRefs(props)
 const attrs = useAttrs()
+const { value, errorMessage, meta } = useField(name, undefined, {
+  syncVModel: 'modelValue'
+})
 </script>
 
 <template>
@@ -14,16 +23,19 @@ const attrs = useAttrs()
     <label :for="id" class="label" data-testid="vtextfield-label">
       {{ label }}
     </label>
-    <div class="control">
+    <VControl>
       <input
         v-bind="$attrs"
-        :id="props.id"
-        v-model="model"
+        :id="id"
+        v-model="value"
         :data-testid="attrs['data-testid'] ?? 'vtextfield-input'"
-        :type="props.type ?? 'text'"
+        :type="type ?? 'text'"
         class="input"
-        :name="props.name"
+        :name="name"
       />
-    </div>
+    </VControl>
+    <p v-if="errorMessage && meta.touched" class="help is-danger">
+      {{ errorMessage }}
+    </p>
   </div>
 </template>

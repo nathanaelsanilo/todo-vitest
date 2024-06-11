@@ -1,9 +1,9 @@
 import type { InputTypeHTMLAttribute } from 'vue'
 
-export type Props = Partial<{
+export type Props = {
   name: string
-  label: string
-  id: string
-  modelValue: string
-  type: InputTypeHTMLAttribute
-}>
+  label?: string
+  id?: string
+  modelValue?: string
+  type?: InputTypeHTMLAttribute
+}
