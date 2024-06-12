@@ -1,21 +1,29 @@
 <script lang="ts" setup>
 import { VButton } from '@/components/VButton'
+import { VControl } from '@/components/VControl'
+import { VField } from '@/components/VField'
 import { VTextField } from '@/components/VTextField'
 import { SinglyLinkedList } from '@/models/SinglyLinkedList'
-import { computed } from 'vue'
+import { toTypedSchema } from '@vee-validate/yup'
+import { useForm } from 'vee-validate'
+import { computed, reactive } from 'vue'
+import { object, string } from 'yup'
 import LinkedItem from './LinkedItem.vue'
 
-const list = new SinglyLinkedList<string>()
-list.append('fish')
-list.append('dog')
-list.append('giraffe')
-list.append('shark')
-list.append('duck')
-list.append('bird')
-list.append('eagle')
-list.append('crab')
+const { handleSubmit } = useForm({
+  validationSchema: toTypedSchema(object({ data: string().required() }))
+})
+const list = reactive(new SinglyLinkedList<string>())
 
 const head = computed(() => list.getFirst())
+
+const onSubmit = handleSubmit(
+  (value, { resetForm }) => {
+    list.append(value.data)
+    resetForm()
+  },
+  (err) => console.log(err)
+)
 </script>
 
 <template>
@@ -23,15 +31,24 @@ const head = computed(() => list.getFirst())
     <div class="container is-max-desktop block">
       <div class="block">
         <h1 class="title">Linked List</h1>
+        <h3 class="subtitle">This page show you how singly linked list works</h3>
       </div>
       <div class="box block">
-        <form>
-          <VTextField label="Data" />
-          <div class="field">
-            <div class="control">
-              <VButton colors="primary">Insert</VButton>
-            </div>
-          </div>
+        <form @submit="onSubmit">
+          <VTextField name="data" label="Data" />
+          <VField is-grouped>
+            <template #grouped>
+              <VControl>
+                <VButton type="submit" colors="primary">Append</VButton>
+              </VControl>
+              <VControl>
+                <VButton type="button">Insert First</VButton>
+              </VControl>
+              <VControl>
+                <VButton type="button">Clear</VButton>
+              </VControl>
+            </template>
+          </VField>
         </form>
       </div>
     </div>
