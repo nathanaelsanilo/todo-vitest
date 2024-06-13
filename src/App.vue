@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { VNotification } from '@/components/VNotification'
 import Navbar from '@/components/Navbar.vue'
+import { VNotification } from '@/components/VNotification'
 import { useNotificationStore } from '@/stores/notification'
 import { computed } from 'vue'
 import type { INotificationDataView } from './models/NotificationDataView'
