@@ -2,6 +2,7 @@
 import BubbleSort from '@/components/Sorts/BubbleSort.vue'
 import InsertionSort from '@/components/Sorts/InsertionSort.vue'
 import SelectionSort from '@/components/Sorts/SelectionSort.vue'
+import CountingSort from '@/components/Sorts/CountingSort.vue'
 import { Generator } from '@/utils/Generator'
 import { ref } from 'vue'
 
@@ -33,6 +34,9 @@ const insertionSortData = ref(initData())
     </div>
     <div class="container is-max-desktop mt-6">
       <InsertionSort :data="insertionSortData" @reset="insertionSortData = initData()" />
+    </div>
+    <div class="container is-max-desktop mt-6">
+      <CountingSort />
     </div>
   </div>
 </template>
