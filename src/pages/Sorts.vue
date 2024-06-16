@@ -4,7 +4,7 @@ import InsertionSort from '@/components/Sorts/InsertionSort.vue'
 import SelectionSort from '@/components/Sorts/SelectionSort.vue'
 import CountingSort from '@/components/Sorts/CountingSort.vue'
 import { Generator } from '@/utils/Generator'
-import { ref } from 'vue'
+import { reactive, ref } from 'vue'
 
 defineOptions({
   name: 'SortsPage'
@@ -22,6 +22,12 @@ const initData = () => {
 const bubbleSortData = ref(initData())
 const selectionSortData = ref(initData())
 const insertionSortData = ref(initData())
+const countingSortdata = reactive(Generator.randNumber({ length: 12, max: 12 }))
+
+const resetCountingSort = () => {
+  countingSortdata.length = 0
+  countingSortdata.push(...Generator.randNumber({ length: 12, max: 12 }))
+}
 </script>
 
 <template>
@@ -36,7 +42,7 @@ const insertionSortData = ref(initData())
       <InsertionSort :data="insertionSortData" @reset="insertionSortData = initData()" />
     </div>
     <div class="container is-max-desktop mt-6">
-      <CountingSort />
+      <CountingSort :data="countingSortdata" @reset="resetCountingSort" />
     </div>
   </div>
 </template>

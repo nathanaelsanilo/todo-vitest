@@ -3,7 +3,7 @@ import type { Props } from './types'
 
 withDefaults(defineProps<Props>(), {
   label: '',
-  max: 500,
+  max: 2000,
   min: 0,
   step: 100,
   testid: 'vrange'
