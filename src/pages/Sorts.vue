@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import BubbleSort from '@/components/Sorts/BubbleSort.vue'
+import CountingSort from '@/components/Sorts/CountingSort.vue'
 import InsertionSort from '@/components/Sorts/InsertionSort.vue'
 import SelectionSort from '@/components/Sorts/SelectionSort.vue'
-import CountingSort from '@/components/Sorts/CountingSort.vue'
 import { Generator } from '@/utils/Generator'
-import { reactive, ref } from 'vue'
+import { ref } from 'vue'
 
 defineOptions({
   name: 'SortsPage'
@@ -22,11 +22,11 @@ const initData = () => {
 const bubbleSortData = ref(initData())
 const selectionSortData = ref(initData())
 const insertionSortData = ref(initData())
-const countingSortdata = reactive(Generator.randNumber({ length: 12, max: 12 }))
+const countingSortdata = ref<number[]>(Generator.randNumber({ length: 12, max: 12 }))
 
 const resetCountingSort = () => {
-  countingSortdata.length = 0
-  countingSortdata.push(...Generator.randNumber({ length: 12, max: 12 }))
+  const newArray = Generator.randNumber({ length: 12, max: 12 })
+  countingSortdata.value = newArray
 }
 </script>
 
