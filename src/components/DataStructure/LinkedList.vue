@@ -10,7 +10,10 @@ import { computed, reactive } from 'vue'
 import { object, string } from 'yup'
 import LinkedItem from './LinkedItem.vue'
 
-const { handleSubmit } = useForm({
+const formState = reactive({
+  data: ''
+})
+const { handleSubmit, resetForm } = useForm({
   validationSchema: toTypedSchema(object({ data: string().required() }))
 })
 const list = reactive(new SinglyLinkedList<string>())
@@ -18,12 +21,17 @@ const list = reactive(new SinglyLinkedList<string>())
 const head = computed(() => list.getFirst())
 
 const onSubmit = handleSubmit(
-  (value, { resetForm }) => {
-    list.append(value.data)
+  () => {
+    list.append(formState.data)
     resetForm()
   },
   (err) => console.log(err)
 )
+
+const insertFirst = () => {
+  list.insertFirst(formState.data)
+  resetForm()
+}
 </script>
 
 <template>
@@ -35,14 +43,14 @@ const onSubmit = handleSubmit(
       </div>
       <div class="box block">
         <form @submit="onSubmit">
-          <VTextField name="data" label="Data" />
+          <VTextField v-model="formState.data" name="data" label="Data" />
           <VField is-grouped>
             <template #grouped>
               <VControl>
                 <VButton type="submit" colors="primary">Append</VButton>
               </VControl>
               <VControl>
-                <VButton type="button">Insert First</VButton>
+                <VButton type="button" @click="insertFirst">Insert First</VButton>
               </VControl>
               <VControl>
                 <VButton type="button">Clear</VButton>
