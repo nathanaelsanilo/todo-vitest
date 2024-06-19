@@ -32,6 +32,10 @@ const insertFirst = () => {
   list.insertFirst(formState.data)
   resetForm()
 }
+
+const clear = () => {
+  list.clear()
+}
 </script>
 
 <template>
@@ -53,7 +57,7 @@ const insertFirst = () => {
                 <VButton type="button" @click="insertFirst">Insert First</VButton>
               </VControl>
               <VControl>
-                <VButton type="button">Clear</VButton>
+                <VButton type="button" @click="clear">Clear</VButton>
               </VControl>
             </template>
           </VField>
@@ -65,7 +69,7 @@ const insertFirst = () => {
         <h1 class="title is-5">Visualization</h1>
       </div>
       <div class="block grid">
-        <LinkedItem v-if="head" :data="head"> </LinkedItem>
+        <LinkedItem v-if="head" :data="head" />
       </div>
     </div>
   </section>
