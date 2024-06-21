@@ -2,7 +2,8 @@
 import type { Props } from './types'
 
 withDefaults(defineProps<Props>(), {
-  title: ''
+  title: '',
+  subtitle: ''
 })
 </script>
 <template>
@@ -10,7 +11,14 @@ withDefaults(defineProps<Props>(), {
     <div class="level-left">
       <div class="level-item">
         <slot name="left">
-          <h1 class="title">{{ title }}</h1>
+          <div>
+            <h1 class="title">{{ title }}</h1>
+            <slot name="subtitle">
+              <h2 v-if="subtitle" class="subtitle">
+                {{ subtitle }}
+              </h2>
+            </slot>
+          </div>
         </slot>
       </div>
     </div>

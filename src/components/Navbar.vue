@@ -21,6 +21,15 @@ defineOptions({
               </RouterLink>
             </div>
           </div>
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link"> Technique </a>
+
+            <div class="navbar-dropdown">
+              <RouterLink :to="{ name: 'technique.two-pointer' }" class="navbar-item">
+                Two Pointer
+              </RouterLink>
+            </div>
+          </div>
           <RouterLink class="navbar-item" :to="{ name: 'todo' }"> Todo App </RouterLink>
         </div>
       </div>

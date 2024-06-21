@@ -1,8 +1,9 @@
-import type { RouteRecordRaw } from 'vue-router'
+import LinkedList from '@/components/DataStructure/LinkedList.vue'
+import PageNotFound from '@/pages/PageNotFound.vue'
 import SortsPage from '@/pages/Sorts.vue'
 import TodoPage from '@/pages/Todo.vue'
-import PageNotFound from '@/pages/PageNotFound.vue'
-import LinkedList from '@/components/DataStructure/LinkedList.vue'
+import TwoPointer from '@/pages/TwoPointer.vue'
+import type { RouteRecordRaw } from 'vue-router'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -18,6 +19,17 @@ const routes: RouteRecordRaw[] = [
         path: '/linked-list',
         name: 'data-structure.linked-list',
         component: LinkedList
+      }
+    ]
+  },
+  {
+    path: '/technique',
+    name: 'technique',
+    children: [
+      {
+        path: '/two-pointer',
+        name: 'technique.two-pointer',
+        component: TwoPointer
       }
     ]
   },
