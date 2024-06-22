@@ -9,7 +9,7 @@ defineOptions({
 })
 const props = defineProps<Props>()
 
-defineModel<string>('modelValue')
+defineModel<string | number>('modelValue')
 
 const { name, id, type, label } = toRefs(props)
 const attrs = useAttrs()

@@ -96,7 +96,7 @@ const doReset = () => {
       <h5 class="title is-5">Original Array</h5>
       <div class="fixed-grid has-12-cols">
         <div class="grid">
-          <div v-for="n in data" :key="`og-${n}`" class="cell">
+          <div v-for="(n, i) in data" :key="`og-${i}`" class="cell">
             <p class="tag is-medium">{{ n }}</p>
           </div>
         </div>
