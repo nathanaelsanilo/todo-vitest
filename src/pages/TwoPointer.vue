@@ -10,10 +10,47 @@ import { number, object } from 'yup'
 const formState = reactive({
   target: 4
 })
-const arr = reactive([7, 4, 2, 1, 5, 9, 8, 3, 6])
+const arr = reactive([
+  {
+    selected: false,
+    value: 7
+  },
+  {
+    selected: false,
+    value: 4
+  },
+  {
+    selected: false,
+    value: 2
+  },
+  {
+    selected: false,
+    value: 1
+  },
+  {
+    selected: false,
+    value: 5
+  },
+  {
+    selected: false,
+    value: 9
+  },
+  {
+    selected: false,
+    value: 8
+  },
+  {
+    selected: false,
+    value: 3
+  },
+  {
+    selected: false,
+    value: 6
+  }
+])
 const result = reactive<number[]>([])
 
-const { find: findSum } = useFindTarget()
+const { find: findSum } = useFindTarget(arr)
 
 const { handleSubmit } = useForm({
   validationSchema: object({
@@ -21,9 +58,11 @@ const { handleSubmit } = useForm({
   })
 })
 
-const find = handleSubmit(({ target }) => {
-  console.log(arr, target)
-  const res = findSum(arr, target)
+const find = handleSubmit(async ({ target }) => {
+  // reset
+  arr.forEach((el) => (el.selected = false))
+
+  const res = await findSum(target)
 
   result.length = 0
   if (!res) return
@@ -32,7 +71,7 @@ const find = handleSubmit(({ target }) => {
 })
 
 const sort = () => {
-  arr.sort()
+  arr.sort((a, b) => a.value - b.value)
 }
 </script>
 
@@ -76,7 +115,7 @@ const sort = () => {
         <div class="fixed-grid has-12-cols">
           <div class="grid">
             <div v-for="(n, i) in arr" :key="i" class="cell">
-              <p class="tag is-medium">{{ n }}</p>
+              <p class="tag is-medium" :class="{ 'is-primary': n.selected }">{{ n.value }}</p>
             </div>
           </div>
         </div>
