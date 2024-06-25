@@ -4,14 +4,17 @@
  * - one pointer slow-runner and the other fast-runner
  * - the input array should be sorted before using two pointer technique
  *
- * find if there exists any pair of elements arr[i], arr[j]
- * such that their sum is equal to X
- *
- * @param arr array of number
- * @param target the sum target
+ 
  */
 export class TwoPointer {
-  static findTarget(arr: number[], target: number) {
+  /**
+   * find if there exists any pair of elements arr[i], arr[j]
+   * such that their sum is equal to X
+   * @param arr input array
+   * @param target target sum
+   * @returns 1 if found a pair
+   */
+  static findTarget(arr: number[], target: number): boolean {
     const n = arr.length
 
     let i = 0 // left pointer
@@ -20,7 +23,7 @@ export class TwoPointer {
     while (i < j) {
       // found a pair!
       if (arr[i] + arr[j] === target) {
-        return 1
+        return true
       }
       // if sum elements of current pointer is LESS than target
       // move left pointer to the next element
@@ -36,5 +39,7 @@ export class TwoPointer {
         j -= 1
       }
     }
+
+    return false
   }
 }
