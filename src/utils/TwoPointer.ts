@@ -1,3 +1,5 @@
+import { NodeItem } from '@/models/SinglyLinkedList'
+
 /**
  * @description Two pointer technique
  * - typically used for searching pairs in a sorted array
@@ -41,5 +43,33 @@ export class TwoPointer {
     }
 
     return false
+  }
+
+  /**
+   * @description leet code #21
+   * @see https://leetcode.com/problems/merge-two-sorted-lists/description/
+   */
+  static mergeLinkedList(
+    l1: NodeItem<number> | null,
+    l2: NodeItem<number> | null
+  ): NodeItem<number> | null {
+    const new_node = new NodeItem(0)
+    let pointer = new_node
+
+    while (l1 && l2) {
+      if (l1.getData() > l2.getData()) {
+        pointer.setNext(l2)
+        l2 = l2.getNext()
+      } else {
+        pointer.setNext(l1)
+        l1 = l1.getNext()
+      }
+
+      pointer = pointer.getNext() as NodeItem<number>
+    }
+
+    pointer.setNext(l1 || l2)
+
+    return new_node.getNext()
   }
 }
