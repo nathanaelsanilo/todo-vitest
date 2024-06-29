@@ -1,4 +1,4 @@
-# Technique
+# Problem Solving Technique
 
 ## Floyd's Tortoise and Hare Algorithm
 

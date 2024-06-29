@@ -11,7 +11,8 @@ defineOptions({
     <div class="container is-max-desktop">
       <div class="navbar-menu">
         <div class="navbar-start">
-          <RouterLink class="navbar-item" :to="{ name: 'root' }"> Sorts </RouterLink>
+          <RouterLink class="navbar-item" :to="{ name: 'sorts' }"> Sorts </RouterLink>
+          <RouterLink class="navbar-item" :to="{ name: 'search' }"> Search </RouterLink>
           <div class="navbar-item has-dropdown is-hoverable">
             <a class="navbar-link"> Data Structure </a>
 

@@ -1,5 +1,6 @@
 import LinkedList from '@/components/DataStructure/LinkedList.vue'
 import PageNotFound from '@/pages/PageNotFound.vue'
+import SearchPage from '@/pages/Search.vue'
 import SortsPage from '@/pages/Sorts.vue'
 import TodoPage from '@/pages/Todo.vue'
 import TwoPointer from '@/pages/TwoPointer.vue'
@@ -8,8 +9,13 @@ import type { RouteRecordRaw } from 'vue-router'
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    name: 'root',
+    name: 'sorts',
     component: SortsPage
+  },
+  {
+    path: '/search',
+    name: 'search',
+    component: SearchPage
   },
   {
     path: '/data-structure',
