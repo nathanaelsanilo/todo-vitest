@@ -1,14 +1,16 @@
 <script lang="ts" setup>
 import type { Props } from './types'
 
-const props = defineProps<Props>()
+defineProps<Props>()
 </script>
 
 <template>
   <div class="card">
     <header class="card-header">
       <p class="card-header-title">
-        {{ props.title }}
+        <slot name="title">
+          {{ title }}
+        </slot>
       </p>
       <slot name="header-icon"></slot>
     </header>
