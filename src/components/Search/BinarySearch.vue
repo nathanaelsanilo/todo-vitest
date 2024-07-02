@@ -3,10 +3,11 @@ import { VButton } from '@/components/VButton'
 import { VCard } from '@/components/VCard'
 import { VTextField } from '@/components/VTextField'
 import { Generator } from '@/utils/Generator'
+import { wait } from '@/utils/Wait'
 import { useToggle } from '@vueuse/core'
 import { useForm } from 'vee-validate'
-import { computed, reactive, ref, unref, type Ref } from 'vue'
-import { object, number } from 'yup'
+import { computed, reactive, ref } from 'vue'
+import { number, object } from 'yup'
 
 type FormState = {
   search: number | undefined
@@ -15,8 +16,11 @@ type FormState = {
 const state = reactive<FormState>({
   search: undefined
 })
+const left = ref(-1)
+const right = ref(-1)
+const mid = ref(-1)
 
-const randNumber = ref<number[]>(Generator.randNumber({ length: 12 }))
+const numbers = ref<number[]>(Generator.randNumber({ length: 12 }))
 const [found, setFound] = useToggle(false)
 
 const { handleSubmit } = useForm<FormState>({
@@ -29,34 +33,44 @@ const { handleSubmit } = useForm<FormState>({
 })
 
 const onSubmit = handleSubmit((value) => {
-  randNumber.value.sort((a, b) => a - b)
-  doSearch(randNumber.value, value.search)
+  numbers.value.sort((a, b) => a - b)
+  doSearch(numbers.value, value.search)
 })
 
-const doSearch = (arr: number[], target: number | undefined) => {
+const reset = () => {
+  left.value = 0
+  right.value = 0
+  mid.value = 0
+}
+
+const doSearch = async (arr: number[], target: number | undefined) => {
   if (target === undefined) return false
 
-  let left = 0
-  let right = arr.length - 1
+  reset()
+  right.value = arr.length - 1
   let result = -1
 
-  while (left <= right) {
-    let mid = Math.floor((right + left) / 2)
+  while (left.value <= right.value) {
+    mid.value = Math.floor((right.value + left.value) / 2)
 
-    if (arr[mid] > target) {
-      right = mid - 1
-    } else if (arr[mid] < target) {
-      left = mid + 1
+    await wait(2000)
+
+    if (arr[mid.value] > target) {
+      right.value = mid.value - 1
+    } else if (arr[mid.value] < target) {
+      left.value = mid.value + 1
     } else {
-      result = arr[mid]
+      result = arr[mid.value]
       setFound(result === target)
       return true
     }
   }
 
-  result = arr[left]
+  result = arr[left.value]
 
   setFound(result === target)
+  left.value = 0
+  right.value = 0
 }
 </script>
 
@@ -92,8 +106,11 @@ const doSearch = (arr: number[], target: number | undefined) => {
   <div class="block">
     <div class="fixed-grid has-12-cols">
       <div class="grid">
-        <div v-for="(n, i) in randNumber" :key="i" class="cell">
-          <div class="tag is-large">
+        <div v-for="(n, i) in numbers" :key="i" class="cell">
+          <div
+            class="tag is-large"
+            :class="{ 'is-primary': i === left || i === right, 'is-info': i === mid }"
+          >
             {{ n }}
           </div>
         </div>
