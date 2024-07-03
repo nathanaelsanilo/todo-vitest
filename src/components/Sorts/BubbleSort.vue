@@ -1,8 +1,8 @@
 <script lang="ts" setup generic="TData extends { value: number; selected: boolean }">
-import { VBar, VBarItem } from '@/components/VBar'
-import { VButton } from '@/components/VButton'
-import { VHeading } from '@/components/VHeading'
-import { VRange } from '@/components/VRange'
+import { VBar, VBarItem } from '@/components/ui/VBar'
+import { VButton } from '@/components/ui/VButton'
+import { VHeading } from '@/components/ui/VHeading'
+import { VRange } from '@/components/ui/VRange'
 import { wait } from '@/utils/Wait'
 import { reactive, toRefs, unref } from 'vue'
 import { useI18n } from 'vue-i18n'

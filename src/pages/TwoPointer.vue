@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { VButton } from '@/components/VButton'
-import { VHeading } from '@/components/VHeading'
-import { VTextField } from '@/components/VTextField'
+import { VButton } from '@/components/ui/VButton'
+import { VHeading } from '@/components/ui/VHeading'
+import { VTextField } from '@/components/ui/VTextField'
 import { useFindTarget } from '@/composables/two-pointer/useFindTarget'
 import { useForm } from 'vee-validate'
 import { reactive } from 'vue'

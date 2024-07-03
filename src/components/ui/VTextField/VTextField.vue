@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { VControl } from '@/components/VControl'
+import { VControl } from '../VControl'
 import { useField } from 'vee-validate'
 import { toRefs, useAttrs } from 'vue'
 import type { Props } from './types'

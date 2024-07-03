@@ -1,4 +1,4 @@
-import { NodeItem } from '@/models/SinglyLinkedList'
+import { NodeItem } from '@/models/linked-list/SinglyLinkedList'
 
 /**
  * @description Two pointer technique

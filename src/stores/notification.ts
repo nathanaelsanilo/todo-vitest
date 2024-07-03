@@ -1,4 +1,4 @@
-import type { INotificationDataView } from '@/models/NotificationDataView'
+import type { INotificationDataView } from '@/models/notification/NotificationDataView'
 import { useTimeoutFn, useToggle } from '@vueuse/core'
 import { defineStore } from 'pinia'
 import { reactive } from 'vue'

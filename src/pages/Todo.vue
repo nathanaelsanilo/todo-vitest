@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import ProgressCounter from '@/components/Todo/ProgressCounter.vue'
-import TodoInput from '@/components/Todo/TodoInput.vue'
-import TodoList from '@/components/Todo/TodoList.vue'
-import { VCard } from '@/components/VCard'
-import { VColumn, VColumns } from '@/components/VColumns'
+import ProgressCounter from '@/components/todo/ProgressCounter.vue'
+import TodoInput from '@/components/todo/TodoInput.vue'
+import TodoList from '@/components/todo/TodoList.vue'
+import { VCard } from '@/components/ui/VCard'
+import { VColumn, VColumns } from '@/components/ui/VColumns'
 import { useI18n } from 'vue-i18n'
 
 defineOptions({

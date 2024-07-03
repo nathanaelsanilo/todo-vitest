@@ -1,6 +1,6 @@
 import { TodoCountCompletedDto } from '@/dtos/TodoCountCompletedDto'
 import { TodoListDto } from '@/dtos/TodoListDto'
-import { TodoRepositoryToken } from '@/models/Injection'
+import { TodoRepositoryToken } from '@/models/injection/Injection'
 import { VueWrapper, mount } from '@vue/test-utils'
 import { container } from 'tsyringe'
 import { beforeEach, describe, expect, it, vi } from 'vitest'

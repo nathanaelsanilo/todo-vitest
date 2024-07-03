@@ -1,4 +1,4 @@
-import { todoKeys } from '@/models/QueryKey'
+import { todoKeys } from '@/models/todo/QueryKey'
 import { TodoService } from '@/services/TodoService'
 import { resolver } from '@/utils/Resolver'
 import { useQuery } from '@tanstack/vue-query'

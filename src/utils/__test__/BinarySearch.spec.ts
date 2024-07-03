@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { BinarySearch } from '../BinarySearch'
+import { BinarySearch } from '../search/BinarySearch'
 
 describe('Binary Search', () => {
   it('do search', () => {

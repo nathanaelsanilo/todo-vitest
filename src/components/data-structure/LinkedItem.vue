@@ -1,6 +1,6 @@
 <script lang="ts" setup generic="TData">
-import { VIcon } from '@/components/VIcon'
-import type { NodeItem } from '@/models/SinglyLinkedList'
+import { VIcon } from '@/components/ui/VIcon'
+import type { NodeItem } from '@/models/linked-list/SinglyLinkedList'
 
 defineProps<{
   data?: NodeItem<TData>

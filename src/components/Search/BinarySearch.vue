@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { VButton } from '@/components/VButton'
-import { VCard } from '@/components/VCard'
-import { VTextField } from '@/components/VTextField'
+import { VButton } from '@/components/ui/VButton'
+import { VCard } from '@/components/ui/VCard'
+import { VTextField } from '@/components/ui/VTextField'
 import { Generator } from '@/utils/Generator'
 import { wait } from '@/utils/Wait'
 import { useToggle } from '@vueuse/core'

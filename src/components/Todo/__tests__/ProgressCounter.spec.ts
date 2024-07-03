@@ -1,5 +1,5 @@
 import { TodoCountCompletedDto } from '@/dtos/TodoCountCompletedDto'
-import { TodoRepositoryToken } from '@/models/Injection'
+import { TodoRepositoryToken } from '@/models/injection/Injection'
 import { mount, type VueWrapper } from '@vue/test-utils'
 import { useDateFormat, useNow } from '@vueuse/core'
 import { container } from 'tsyringe'

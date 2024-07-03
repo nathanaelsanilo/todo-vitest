@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import { VButton } from '@/components/VButton'
-import { VHeading } from '@/components/VHeading'
-import { VIcon } from '@/components/VIcon'
-import { VRange } from '@/components/VRange'
+import { VButton } from '@/components/ui/VButton'
+import { VHeading } from '@/components/ui/VHeading'
+import { VIcon } from '@/components/ui/VIcon'
+import { VRange } from '@/components/ui/VRange'
 import { wait } from '@/utils/Wait'
 import { reactive, ref, toRefs } from 'vue'
 import { useI18n } from 'vue-i18n'

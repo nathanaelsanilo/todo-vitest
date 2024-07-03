@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { SelectionSort } from '../SelectionSort'
+import { SelectionSort } from '../sorts/SelectionSort'
 
 describe('Selection sort', () => {
   it('should sort', () => {

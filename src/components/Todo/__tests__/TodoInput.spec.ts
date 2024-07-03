@@ -1,4 +1,4 @@
-import { TodoRepositoryToken } from '@/models/Injection'
+import { TodoRepositoryToken } from '@/models/injection/Injection'
 import { TodoRepositoryImpl } from '@/repository/TodoRepositoryImpl'
 import { formatTimestamp } from '@/utils/Date'
 import { flushPromises, mount } from '@vue/test-utils'

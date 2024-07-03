@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { BubbleSort } from '../BubbleSort'
+import { BubbleSort } from '../sorts/BubbleSort'
 
 describe('Bubble sort', () => {
   it('should sort', () => {

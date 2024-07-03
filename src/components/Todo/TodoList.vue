@@ -1,13 +1,13 @@
 <script lang="ts" setup>
-import { useTodoListQuery } from '@/composables/useTodoListQuery'
+import TodoListItem from '@/components/todo/TodoListItem.vue'
+import { VTextField } from '@/components/ui/VTextField'
+import { useTodoListQuery } from '@/composables/todo/useTodoListQuery'
 import { AppConstant } from '@/models/Constant'
-import { TodoQueryParams } from '@/models/TodoQueryParams'
+import { TodoQueryParams } from '@/models/todo/TodoQueryParams'
 import { useDebounceFn } from '@vueuse/core'
 import { useSortable } from '@vueuse/integrations/useSortable'
 import { reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import TodoListItem from './TodoListItem.vue'
-import { VTextField } from '../VTextField'
 
 const { t } = useI18n()
 const params = reactive(new TodoQueryParams())

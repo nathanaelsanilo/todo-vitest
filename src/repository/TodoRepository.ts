@@ -3,7 +3,7 @@ import type { TodoCreateDto } from '@/dtos/TodoCreateDto'
 import type { TodoDetailDto } from '@/dtos/TodoDetailDto'
 import type { TodoListDto } from '@/dtos/TodoListDto'
 import type { TodoReorderDto } from '@/dtos/TodoReorderDto'
-import type { TodoQueryParams } from '@/models/TodoQueryParams'
+import type { TodoQueryParams } from '@/models/todo/TodoQueryParams'
 
 export interface TodoRepository {
   create(dto: TodoCreateDto): Promise<TodoDetailDto>

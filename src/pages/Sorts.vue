@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import BubbleSort from '@/components/Sorts/BubbleSort.vue'
-import CountingSort from '@/components/Sorts/CountingSort.vue'
-import InsertionSort from '@/components/Sorts/InsertionSort.vue'
-import SelectionSort from '@/components/Sorts/SelectionSort.vue'
+import BubbleSort from '@/components/sorts/BubbleSort.vue'
+import CountingSort from '@/components/sorts/CountingSort.vue'
+import InsertionSort from '@/components/sorts/InsertionSort.vue'
+import SelectionSort from '@/components/sorts/SelectionSort.vue'
 import { Generator } from '@/utils/Generator'
 import { ref } from 'vue'
 

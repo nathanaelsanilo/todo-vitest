@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import BinarySearch from '@/components/Search/BinarySearch.vue'
+import BinarySearch from '@/components/search/BinarySearch.vue'
 
 defineOptions({
   name: 'SearchPage'

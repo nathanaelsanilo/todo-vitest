@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { VControl } from '@/components/VControl'
+import { VControl } from '../VControl'
 
 defineProps<{
   label?: string

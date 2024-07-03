@@ -1,4 +1,4 @@
-import LinkedList from '@/components/DataStructure/LinkedList.vue'
+import LinkedList from '@/components/data-structure/LinkedList.vue'
 import PageNotFound from '@/pages/PageNotFound.vue'
 import SearchPage from '@/pages/Search.vue'
 import SortsPage from '@/pages/Sorts.vue'

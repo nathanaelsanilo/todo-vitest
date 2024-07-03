@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { VProgress } from '@/components/VProgress'
-import { useTodoProgressQuery } from '@/composables/useTodoProgressQuery'
+import { VProgress } from '@/components/ui/VProgress'
+import { useTodoProgressQuery } from '@/composables/todo/useTodoProgressQuery'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()

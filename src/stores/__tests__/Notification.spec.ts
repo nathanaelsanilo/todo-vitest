@@ -1,4 +1,4 @@
-import { NotificationDataView } from '@/models/NotificationDataView'
+import { NotificationDataView } from '@/models/notification/NotificationDataView'
 import { createPinia, setActivePinia } from 'pinia'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { useNotificationStore } from '../notification'

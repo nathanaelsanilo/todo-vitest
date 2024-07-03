@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { TwoPointer } from '../TwoPointer'
-import { NodeItem } from '@/models/SinglyLinkedList'
+import { TwoPointer } from '../technique/TwoPointer'
+import { NodeItem } from '@/models/linked-list/SinglyLinkedList'
 
 describe('Two Pointer Technique', () => {
   it('find target of x', () => {

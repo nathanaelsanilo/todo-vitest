@@ -1,9 +1,9 @@
-import { TodoRepositoryToken } from '@/models/Injection'
+import { TodoRepositoryToken } from '@/models/injection/Injection'
 import { flushPromises, mount } from '@vue/test-utils'
 import { container } from 'tsyringe'
 import { describe, expect, it, vi } from 'vitest'
 import { defineComponent } from 'vue'
-import { useTodoCreate } from '../useTodoCreate'
+import { useTodoCreate } from '../todo/useTodoCreate'
 
 describe('useTodoCreate', () => {
   it('should create', async () => {
