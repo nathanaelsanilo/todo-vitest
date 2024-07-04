@@ -11,7 +11,7 @@ describe('Two Pointer Technique', () => {
 
     const result = TwoPointer.findTarget(arr, target)
 
-    expect(result).toBe(1)
+    expect(result).toBe(true)
   })
 
   it('should merge two linked list', () => {
@@ -30,5 +30,11 @@ describe('Two Pointer Technique', () => {
       p = p.getNext()
       console.log(p?.getData())
     }
+  })
+
+  it('should count unique value', () => {
+    const unique = TwoPointer.countUniqueValue([1, 1, 1, 2])
+
+    expect(unique).toBe(2)
   })
 })
