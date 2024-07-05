@@ -10,7 +10,7 @@ export class BinarySearch {
     let left = 0 // left pointer
     let right = arr.length - 1 // right most pointer
 
-    while (left <= right) {
+    while (left < right) {
       // count mid index on each iteration
       const mid = Math.floor((left + right) / 2)
 
