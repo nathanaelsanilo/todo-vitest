@@ -2,7 +2,7 @@
 import { VButton } from '@/components/ui/VButton'
 import { VHeading } from '@/components/ui/VHeading'
 import { VTextField } from '@/components/ui/VTextField'
-import { useFindTarget } from '@/composables/two-pointer/useFindTarget'
+import { wait } from '@/utils/Wait'
 import { useForm } from 'vee-validate'
 import { reactive } from 'vue'
 import { number, object } from 'yup'
@@ -50,13 +50,35 @@ const arr = reactive([
 ])
 const result = reactive<number[]>([])
 
-const { find: findSum } = useFindTarget(arr)
-
 const { handleSubmit } = useForm({
   validationSchema: object({
     target: number()
   })
 })
+
+const findSum = async (target: number) => {
+  let i = 0
+  let j = arr.length - 1
+
+  while (i < j) {
+    arr[i].selected = true
+    arr[j].selected = true
+    const sum = arr[i].value + arr[j].value
+    if (sum === target) {
+      return [arr[i].value, arr[j].value]
+    } else if (sum < target) {
+      i++
+      await wait(500)
+      arr[i - 1].selected = false
+    } else {
+      j--
+      await wait(500)
+      arr[j + 1].selected = false
+    }
+  }
+
+  return null
+}
 
 const find = handleSubmit(async ({ target }) => {
   // reset
